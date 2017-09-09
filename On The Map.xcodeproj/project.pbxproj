@@ -12,6 +12,7 @@
 		11F08D691F6309750076D079 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11F08D671F6309750076D079 /* Main.storyboard */; };
 		11F08D6B1F6309750076D079 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 11F08D6A1F6309750076D079 /* Assets.xcassets */; };
 		11F08D6E1F6309750076D079 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11F08D6C1F6309750076D079 /* LaunchScreen.storyboard */; };
+		11F08D761F6428380076D079 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F08D751F6428380076D079 /* LoginViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		11F08D6A1F6309750076D079 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		11F08D6D1F6309750076D079 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		11F08D6F1F6309750076D079 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		11F08D751F6428380076D079 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +59,7 @@
 				11F08D631F6309750076D079 /* AppDelegate.swift */,
 				11F08D651F6309750076D079 /* ViewController.swift */,
 				11F08D671F6309750076D079 /* Main.storyboard */,
+				11F08D751F6428380076D079 /* LoginViewController.swift */,
 				11F08D6A1F6309750076D079 /* Assets.xcassets */,
 				11F08D6C1F6309750076D079 /* LaunchScreen.storyboard */,
 				11F08D6F1F6309750076D079 /* Info.plist */,
@@ -137,6 +140,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				11F08D761F6428380076D079 /* LoginViewController.swift in Sources */,
 				11F08D661F6309750076D079 /* ViewController.swift in Sources */,
 				11F08D641F6309750076D079 /* AppDelegate.swift in Sources */,
 			);

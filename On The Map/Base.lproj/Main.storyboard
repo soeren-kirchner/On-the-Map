@@ -11,10 +11,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Login View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="On_The_Map" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="LoginViewController" customModule="On_The_Map" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -23,11 +23,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="earth-earth-at-night-night-lights-41949" translatesAutoresizingMaskIntoConstraints="NO" id="auc-rD-ocr">
-                                <rect key="frame" x="16" y="20" width="288" height="548"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login" translatesAutoresizingMaskIntoConstraints="NO" id="auc-rD-ocr">
+                                <rect key="frame" x="16" y="0.0" width="288" height="916"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UdacityLogo" translatesAutoresizingMaskIntoConstraints="NO" id="ShS-Y6-5Xf">
-                                <rect key="frame" x="120" y="80" width="80" height="80"/>
+                                <rect key="frame" x="120" y="60" width="80" height="80"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="V5e-br-tKA"/>
                                     <constraint firstAttribute="width" constant="80" id="qYq-u9-M4U"/>
@@ -40,7 +40,7 @@
                                 </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" alpha="0.69999999999999996" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PrS-hX-j5y">
                                 <rect key="frame" x="36" y="408" width="248" height="45"/>
@@ -49,7 +49,7 @@
                                 </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
                             <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Wo-uP-uc3">
                                 <rect key="frame" x="36" y="483" width="248" height="45"/>
@@ -69,38 +69,41 @@
                                 </userDefinedRuntimeAttributes>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="On The Map" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8zB-oo-WJj">
-                                <rect key="frame" x="89.5" y="172" width="141" height="30"/>
+                                <rect key="frame" x="89.5" y="152" width="141" height="30"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="25"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="Ppl-T8-EBK">
-                                <rect key="frame" x="150" y="227" width="20" height="20"/>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="Ppl-T8-EBK">
+                                <rect key="frame" x="150" y="207" width="20" height="20"/>
                             </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.096875000000000003" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="ShS-Y6-5Xf" firstAttribute="top" secondItem="auc-rD-ocr" secondAttribute="top" constant="60" id="0DJ-XG-BbY"/>
                             <constraint firstItem="Ppl-T8-EBK" firstAttribute="top" secondItem="8zB-oo-WJj" secondAttribute="bottom" constant="25" id="4bB-SO-Gl2"/>
                             <constraint firstItem="8zB-oo-WJj" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="8RC-H5-Q8h"/>
                             <constraint firstItem="AvS-zY-ZbL" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="9yA-6W-8pC"/>
                             <constraint firstItem="ShS-Y6-5Xf" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="CqY-J0-fbN"/>
                             <constraint firstAttribute="trailingMargin" secondItem="auc-rD-ocr" secondAttribute="trailing" id="Dyy-VV-gE0"/>
-                            <constraint firstItem="auc-rD-ocr" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="Eg9-Pz-7kq"/>
                             <constraint firstAttribute="trailingMargin" secondItem="5Wo-uP-uc3" secondAttribute="trailing" constant="20" id="FEN-pO-cMi"/>
                             <constraint firstItem="Ppl-T8-EBK" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="J4C-4s-UxH"/>
                             <constraint firstItem="auc-rD-ocr" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="PC3-TY-dOs"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="auc-rD-ocr" secondAttribute="bottom" id="WpN-eT-oKV"/>
                             <constraint firstItem="5Wo-uP-uc3" firstAttribute="top" secondItem="PrS-hX-j5y" secondAttribute="bottom" constant="30" id="Wvp-OR-a70"/>
                             <constraint firstAttribute="trailingMargin" secondItem="AvS-zY-ZbL" secondAttribute="trailing" constant="20" id="bWh-IT-2pC"/>
                             <constraint firstAttribute="trailingMargin" secondItem="PrS-hX-j5y" secondAttribute="trailing" constant="20" id="gp6-7m-go6"/>
+                            <constraint firstItem="auc-rD-ocr" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="jMG-Vs-cUb"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="5Wo-uP-uc3" secondAttribute="bottom" constant="40" id="m16-im-hoV"/>
                             <constraint firstItem="5Wo-uP-uc3" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="oBH-4h-gXL"/>
-                            <constraint firstItem="ShS-Y6-5Xf" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="60" id="uo0-Sj-7VH"/>
                             <constraint firstItem="PrS-hX-j5y" firstAttribute="top" secondItem="AvS-zY-ZbL" secondAttribute="bottom" constant="15" id="v7M-Kd-viT"/>
                             <constraint firstItem="8zB-oo-WJj" firstAttribute="top" secondItem="ShS-Y6-5Xf" secondAttribute="bottom" constant="12" id="wRV-Xw-0Su"/>
                             <constraint firstItem="PrS-hX-j5y" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="zjv-tC-CZh"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="loginTextField" destination="AvS-zY-ZbL" id="Gli-kU-bth"/>
+                        <outlet property="passwdTextField" destination="PrS-hX-j5y" id="zT8-lO-4u0"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -227,6 +230,6 @@
         <image name="List" width="32" height="32"/>
         <image name="Map" width="32" height="32"/>
         <image name="UdacityLogo" width="80" height="80"/>
-        <image name="earth-earth-at-night-night-lights-41949" width="2400" height="1200"/>
+        <image name="login" width="1206" height="916"/>
     </resources>
 </document>
