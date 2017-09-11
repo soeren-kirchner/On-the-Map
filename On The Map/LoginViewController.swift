@@ -12,11 +12,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var loginTextField: UITextField!
     @IBOutlet weak var passwdTextField: UITextField!
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        print("Login ViewController called")
-    }
+    @IBOutlet weak var loginActivityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var loginButton: UIButton!
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -27,6 +24,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         subscribeToKeyboardNotifications()
         loginTextField.delegate = self
         passwdTextField.delegate = self
+        loginActivityIndicator.hidesWhenStopped = true
+        loginActivityIndicator.stopAnimating()
+        loginButton.setTitleColor(UIColor.darkGray, for: .normal)
+        loginButton.setTitleColor(UIColor.lightGray, for: .disabled)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -35,10 +36,31 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         unsubscribeFromKeyboardNotifications()
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
+    // MARK: - Navigation
+    
+    func showAlert(_ alert: String) {
+        let alertViewController = UIAlertController(title: "Login Failure", message: alert, preferredStyle: .alert)
+        alertViewController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alertViewController, animated: true, completion: nil)
     }
     
+    @IBAction func login(_ sender: Any) {
+        loginActivityIndicator.startAnimating()
+        loginButton.isEnabled = false
+        UdacityClient.shared.udacityLogin(user: loginTextField.text!, password: passwdTextField.text!) { data, error in
+            DispatchQueue.main.async {
+                self.loginActivityIndicator.stopAnimating()
+                self.loginButton.isEnabled = true
+                guard error == nil else {
+                    print(error.debugDescription)
+                    self.showAlert(error!.localizedDescription)
+                    return
+                }
+                self.performSegue(withIdentifier: "LoggedInSegue", sender: self)
+            }
+        }
+    }
+
     // MARK: - Keybord things
     
     func subscribeToKeyboardNotifications() {
@@ -64,19 +86,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     func keyboardWillHide(_ notification:Notification) {
         view.frame.origin.y = 0
     }
-    
-    
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-    // Mark: - TextFieldDelegate
+    // MARK: TextFieldDelegate
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
