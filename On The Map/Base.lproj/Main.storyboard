@@ -23,8 +23,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="login" translatesAutoresizingMaskIntoConstraints="NO" id="auc-rD-ocr">
-                                <rect key="frame" x="16" y="0.0" width="288" height="560"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login" translatesAutoresizingMaskIntoConstraints="NO" id="auc-rD-ocr">
+                                <rect key="frame" x="16" y="0.0" width="288" height="916"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UdacityLogo" translatesAutoresizingMaskIntoConstraints="NO" id="ShS-Y6-5Xf">
                                 <rect key="frame" x="120" y="60" width="80" height="80"/>
@@ -33,7 +33,7 @@
                                     <constraint firstAttribute="width" constant="80" id="qYq-u9-M4U"/>
                                 </constraints>
                             </imageView>
-                            <textField opaque="NO" clipsSubviews="YES" alpha="0.69999999999999996" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Login" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="AvS-zY-ZbL">
+                            <textField opaque="NO" clipsSubviews="YES" alpha="0.69999999999999996" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="sk@tologo.de" borderStyle="roundedRect" placeholder="Login" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="AvS-zY-ZbL">
                                 <rect key="frame" x="36" y="348" width="248" height="45"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="GK1-Ev-fYS"/>
@@ -42,7 +42,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" alpha="0.69999999999999996" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PrS-hX-j5y">
+                            <textField opaque="NO" clipsSubviews="YES" alpha="0.69999999999999996" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="K7eXLHz9ojcxCv" borderStyle="roundedRect" placeholder="Password" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PrS-hX-j5y">
                                 <rect key="frame" x="36" y="408" width="248" height="45"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="4aW-hM-cOu"/>
@@ -115,7 +115,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="22.5" y="221.83098591549296"/>
+            <point key="canvasLocation" x="-19" y="222"/>
         </scene>
         <!--On The Map-->
         <scene sceneID="3u8-eW-WQj">
@@ -198,10 +198,10 @@
             </objects>
             <point key="canvasLocation" x="1904.8" y="573.46326836581716"/>
         </scene>
-        <!--Table View Controller-->
+        <!--On The Map-->
         <scene sceneID="FKx-8C-dlE">
             <objects>
-                <tableViewController id="CnZ-5U-I0U" sceneMemberID="viewController">
+                <tableViewController id="CnZ-5U-I0U" customClass="StudentsTableViewController" customModule="On_The_Map" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="2Yr-1V-27c">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -221,7 +221,13 @@
                             <outlet property="delegate" destination="CnZ-5U-I0U" id="neZ-Q2-Zkm"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="1Q7-if-us4"/>
+                    <navigationItem key="navigationItem" title="On The Map" id="1Q7-if-us4">
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="mA6-yU-Rt0"/>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="sUb-H7-ymt"/>
+                            <barButtonItem systemItem="refresh" id="7gX-zB-tVb"/>
+                        </rightBarButtonItems>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BGv-AI-BTq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
