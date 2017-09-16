@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -120,7 +120,7 @@
         <!--On The Map-->
         <scene sceneID="3u8-eW-WQj">
             <objects>
-                <viewController id="dqq-zM-MY9" sceneMemberID="viewController">
+                <viewController id="dqq-zM-MY9" customClass="StudentsMapViewController" customModule="On_The_Map" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Ooi-R4-ZHq"/>
                         <viewControllerLayoutGuide type="bottom" id="AP7-qu-8Dc"/>
@@ -128,15 +128,41 @@
                     <view key="view" contentMode="scaleToFill" id="iET-l2-ecU">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="sIC-9k-mX1">
+                                <rect key="frame" x="0.0" y="64" width="320" height="455"/>
+                            </mapView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="sIC-9k-mX1" firstAttribute="leading" secondItem="iET-l2-ecU" secondAttribute="leading" id="Hf1-tX-AwY"/>
+                            <constraint firstItem="AP7-qu-8Dc" firstAttribute="top" secondItem="sIC-9k-mX1" secondAttribute="bottom" id="Kcu-8f-bhf"/>
+                            <constraint firstAttribute="trailing" secondItem="sIC-9k-mX1" secondAttribute="trailing" id="czo-I6-puu"/>
+                            <constraint firstItem="sIC-9k-mX1" firstAttribute="top" secondItem="Ooi-R4-ZHq" secondAttribute="bottom" id="oN9-sG-c8W"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="On The Map" id="fyd-QA-pcX">
-                        <barButtonItem key="leftBarButtonItem" title="Logout" id="ot2-gW-jha"/>
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="ot2-gW-jha">
+                            <connections>
+                                <action selector="logout:" destination="dqq-zM-MY9" id="iTs-2r-Fp0"/>
+                            </connections>
+                        </barButtonItem>
                         <rightBarButtonItems>
-                            <barButtonItem systemItem="add" id="SzJ-5X-3gh"/>
-                            <barButtonItem systemItem="refresh" id="RBZ-kT-LBI"/>
+                            <barButtonItem systemItem="add" id="SzJ-5X-3gh">
+                                <connections>
+                                    <action selector="add:" destination="dqq-zM-MY9" id="dht-xR-cKh"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="refresh" id="RBZ-kT-LBI">
+                                <connections>
+                                    <action selector="fetchStudents:" destination="dqq-zM-MY9" id="b2Z-Sg-RjC"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
+                    <connections>
+                        <outlet property="mapView" destination="sIC-9k-mX1" id="zre-bS-nY7"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b2U-rK-AhA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -202,18 +228,39 @@
         <scene sceneID="FKx-8C-dlE">
             <objects>
                 <tableViewController id="CnZ-5U-I0U" customClass="StudentsTableViewController" customModule="On_The_Map" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="2Yr-1V-27c">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="46" sectionHeaderHeight="28" sectionFooterHeight="28" id="2Yr-1V-27c">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="k7g-6g-q7f">
-                                <rect key="frame" x="0.0" y="28" width="320" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="StudentsTableViewCell" rowHeight="46" id="k7g-6g-q7f" customClass="StudentsTableViewCell" customModule="On_The_Map" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="320" height="46"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="k7g-6g-q7f" id="DEb-hJ-g85">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="46"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZpZ-4Z-EDN">
+                                            <rect key="frame" x="56" y="12.5" width="246" height="20.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Pin" translatesAutoresizingMaskIntoConstraints="NO" id="Jhn-5F-pAV">
+                                            <rect key="frame" x="14" y="6.5" width="32" height="32"/>
+                                        </imageView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Jhn-5F-pAV" firstAttribute="leading" secondItem="DEb-hJ-g85" secondAttribute="leadingMargin" constant="6" id="7mb-Qk-AgP"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="ZpZ-4Z-EDN" secondAttribute="trailing" constant="10" id="awn-LP-onH"/>
+                                        <constraint firstItem="ZpZ-4Z-EDN" firstAttribute="leading" secondItem="Jhn-5F-pAV" secondAttribute="trailing" constant="10" id="eeU-pl-XVX"/>
+                                        <constraint firstItem="Jhn-5F-pAV" firstAttribute="centerY" secondItem="DEb-hJ-g85" secondAttribute="centerY" id="k7p-Ju-wUG"/>
+                                        <constraint firstItem="ZpZ-4Z-EDN" firstAttribute="centerY" secondItem="DEb-hJ-g85" secondAttribute="centerY" id="lMl-3e-BrA"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="nameLabel" destination="ZpZ-4Z-EDN" id="kyb-sy-kQ5"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -222,21 +269,34 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="On The Map" id="1Q7-if-us4">
-                        <barButtonItem key="leftBarButtonItem" title="Logout" id="mA6-yU-Rt0"/>
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="mA6-yU-Rt0">
+                            <connections>
+                                <action selector="logout:" destination="CnZ-5U-I0U" id="TbU-MV-q7g"/>
+                            </connections>
+                        </barButtonItem>
                         <rightBarButtonItems>
-                            <barButtonItem systemItem="add" id="sUb-H7-ymt"/>
-                            <barButtonItem systemItem="refresh" id="7gX-zB-tVb"/>
+                            <barButtonItem systemItem="add" id="sUb-H7-ymt">
+                                <connections>
+                                    <action selector="add:" destination="CnZ-5U-I0U" id="vbz-dx-JX5"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="refresh" id="7gX-zB-tVb">
+                                <connections>
+                                    <action selector="fetchStudents:" destination="CnZ-5U-I0U" id="mtl-Kv-rR1"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BGv-AI-BTq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2844" y="573"/>
+            <point key="canvasLocation" x="2842.5" y="572.53521126760563"/>
         </scene>
     </scenes>
     <resources>
         <image name="List" width="32" height="32"/>
         <image name="Map" width="32" height="32"/>
+        <image name="Pin" width="32" height="32"/>
         <image name="UdacityLogo" width="80" height="80"/>
         <image name="login" width="1206" height="916"/>
     </resources>

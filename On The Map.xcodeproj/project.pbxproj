@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		11441ABF1F69813600F3DC35 /* UdacityError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11441ABE1F69813600F3DC35 /* UdacityError.swift */; };
 		11441AC11F6C5D1700F3DC35 /* StudentsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11441AC01F6C5D1700F3DC35 /* StudentsTableViewCell.swift */; };
+		11441AC31F6DB46A00F3DC35 /* StudentsMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11441AC21F6DB46A00F3DC35 /* StudentsMapViewController.swift */; };
 		11F08D641F6309750076D079 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F08D631F6309750076D079 /* AppDelegate.swift */; };
 		11F08D691F6309750076D079 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11F08D671F6309750076D079 /* Main.storyboard */; };
 		11F08D6B1F6309750076D079 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 11F08D6A1F6309750076D079 /* Assets.xcassets */; };
@@ -24,6 +25,7 @@
 /* Begin PBXFileReference section */
 		11441ABE1F69813600F3DC35 /* UdacityError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityError.swift; sourceTree = "<group>"; };
 		11441AC01F6C5D1700F3DC35 /* StudentsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentsTableViewCell.swift; sourceTree = "<group>"; };
+		11441AC21F6DB46A00F3DC35 /* StudentsMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentsMapViewController.swift; sourceTree = "<group>"; };
 		11F08D601F6309740076D079 /* On The Map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "On The Map.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		11F08D631F6309750076D079 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		11F08D681F6309750076D079 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 				11F08D751F6428380076D079 /* LoginViewController.swift */,
 				11F08D841F6705520076D079 /* StudentsTableViewController.swift */,
 				11441AC01F6C5D1700F3DC35 /* StudentsTableViewCell.swift */,
+				11441AC21F6DB46A00F3DC35 /* StudentsMapViewController.swift */,
 			);
 			name = controller;
 			sourceTree = "<group>";
@@ -205,6 +208,7 @@
 				11F08D851F6705520076D079 /* StudentsTableViewController.swift in Sources */,
 				11441AC11F6C5D1700F3DC35 /* StudentsTableViewCell.swift in Sources */,
 				11F08D761F6428380076D079 /* LoginViewController.swift in Sources */,
+				11441AC31F6DB46A00F3DC35 /* StudentsMapViewController.swift in Sources */,
 				11FAE3181F6717BF00383B0A /* Student.swift in Sources */,
 				11F08D641F6309750076D079 /* AppDelegate.swift in Sources */,
 			);
