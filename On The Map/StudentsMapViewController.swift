@@ -18,6 +18,8 @@ class StudentsMapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
+        mapView.showsScale = true
+        mapView.showsPointsOfInterest = true
         fetchStudents()
     }
     
@@ -57,6 +59,7 @@ class StudentsMapViewController: UIViewController {
     }
     
     @IBAction func add(_ sender: Any) {
+        performSegue(withIdentifier: "MapToAddLocation", sender: self)
     }
     
     @IBAction func logout(_ sender: Any) {

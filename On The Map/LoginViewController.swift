@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LoginViewController: UIViewController, UITextFieldDelegate {
+class LoginViewController: UIViewController {
 
     @IBOutlet weak var loginTextField: UITextField!
     @IBOutlet weak var passwdTextField: UITextField!
@@ -86,8 +86,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     func keyboardWillHide(_ notification:Notification) {
         view.frame.origin.y = 0
     }
+    
+}
 
-    // MARK: TextFieldDelegate
+extension LoginViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
