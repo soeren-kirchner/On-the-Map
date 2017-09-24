@@ -8,6 +8,11 @@
 
 import UIKit
 
+typealias JSONDictionary = [String:AnyObject]
+typealias JSONArray = [JSONDictionary]
+
+typealias ParametersArray = [String:AnyObject]
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

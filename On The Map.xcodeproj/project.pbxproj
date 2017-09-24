@@ -12,6 +12,7 @@
 		11441AC31F6DB46A00F3DC35 /* StudentsMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11441AC21F6DB46A00F3DC35 /* StudentsMapViewController.swift */; };
 		11441AC51F6F21DA00F3DC35 /* AddLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11441AC41F6F21DA00F3DC35 /* AddLocationViewController.swift */; };
 		11441AC71F70147400F3DC35 /* CheckLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11441AC61F70147400F3DC35 /* CheckLocationViewController.swift */; };
+		11E315591F76F11C00B6C7E9 /* UdacityAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E315581F76F11C00B6C7E9 /* UdacityAccount.swift */; };
 		11F08D641F6309750076D079 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F08D631F6309750076D079 /* AppDelegate.swift */; };
 		11F08D691F6309750076D079 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11F08D671F6309750076D079 /* Main.storyboard */; };
 		11F08D6B1F6309750076D079 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 11F08D6A1F6309750076D079 /* Assets.xcassets */; };
@@ -30,6 +31,8 @@
 		11441AC21F6DB46A00F3DC35 /* StudentsMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentsMapViewController.swift; sourceTree = "<group>"; };
 		11441AC41F6F21DA00F3DC35 /* AddLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddLocationViewController.swift; sourceTree = "<group>"; };
 		11441AC61F70147400F3DC35 /* CheckLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckLocationViewController.swift; sourceTree = "<group>"; };
+		11E315561F7490F600B6C7E9 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		11E315581F76F11C00B6C7E9 /* UdacityAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UdacityAccount.swift; sourceTree = "<group>"; };
 		11F08D601F6309740076D079 /* On The Map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "On The Map.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		11F08D631F6309750076D079 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		11F08D681F6309750076D079 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -55,6 +58,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		11E315571F76F0D800B6C7E9 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				11E315581F76F11C00B6C7E9 /* UdacityAccount.swift */,
+			);
+			name = model;
+			sourceTree = "<group>";
+		};
 		11F08D571F6309740076D079 = {
 			isa = PBXGroup;
 			children = (
@@ -80,6 +91,7 @@
 				11F08D821F66F9440076D079 /* storyboards */,
 				11F08D6A1F6309750076D079 /* Assets.xcassets */,
 				11F08D6F1F6309750076D079 /* Info.plist */,
+				11E315561F7490F600B6C7E9 /* README.md */,
 			);
 			path = "On The Map";
 			sourceTree = "<group>";
@@ -104,6 +116,7 @@
 		11F08D7B1F65BEE50076D079 /* Udacity */ = {
 			isa = PBXGroup;
 			children = (
+				11E315571F76F0D800B6C7E9 /* model */,
 				11F08D7C1F65BEFD0076D079 /* UdacityClient.swift */,
 				11F08D7E1F65D9050076D079 /* UdacityConstants.swift */,
 				11F08D801F65E0920076D079 /* UdacityLogin.swift */,
@@ -213,6 +226,7 @@
 				11F08D7F1F65D9050076D079 /* UdacityConstants.swift in Sources */,
 				11F08D851F6705520076D079 /* StudentsTableViewController.swift in Sources */,
 				11441AC51F6F21DA00F3DC35 /* AddLocationViewController.swift in Sources */,
+				11E315591F76F11C00B6C7E9 /* UdacityAccount.swift in Sources */,
 				11441AC11F6C5D1700F3DC35 /* StudentsTableViewCell.swift in Sources */,
 				11F08D761F6428380076D079 /* LoginViewController.swift in Sources */,
 				11441AC31F6DB46A00F3DC35 /* StudentsMapViewController.swift in Sources */,

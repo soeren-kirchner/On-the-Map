@@ -39,23 +39,58 @@ class LoginViewController: UIViewController {
     // MARK: - Navigation
     
     func showAlert(_ alert: String) {
-        let alertViewController = UIAlertController(title: "Login Failure", message: alert, preferredStyle: .alert)
-        alertViewController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        present(alertViewController, animated: true, completion: nil)
+        DispatchQueue.main.async {
+            let alertViewController = UIAlertController(title: "Login Failure", message: alert, preferredStyle: .alert)
+            alertViewController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alertViewController, animated: true, completion: nil)
+        }
     }
     
     @IBAction func login(_ sender: Any) {
         loginActivityIndicator.startAnimating()
         loginButton.isEnabled = false
         UdacityClient.shared.udacityLogin(user: loginTextField.text!, password: passwdTextField.text!) { data, error in
+            print(data)
+            
             DispatchQueue.main.async {
                 self.loginActivityIndicator.stopAnimating()
                 self.loginButton.isEnabled = true
+            }
+            
+            guard error == nil else {
+                print(error.debugDescription)
+                self.showAlert(error!.localizedDescription)
+                return
+            }
+            
+            guard
+                let data = data,
+                let accountData = data["account"] as? JSONDictionary,
+                let account = UdacityAccount(dictionary: accountData)
+                else {
+                    return
+            }
+            
+            UdacityClient.shared.account = account
+            print(account)
+            
+            UdacityClient.shared.fetchStudent(account.key) { student, error in
+
                 guard error == nil else {
                     print(error.debugDescription)
                     self.showAlert(error!.localizedDescription)
                     return
                 }
+                
+                guard let student = student else {
+                    self.showAlert("something wrong with student data")
+                    return
+                }
+                
+                UdacityClient.shared.mySelf = student
+            }
+            
+            DispatchQueue.main.async {
                 self.performSegue(withIdentifier: "LoggedInSegue", sender: self)
             }
         }

@@ -15,54 +15,80 @@ final class UdacityClient: NSObject {
     private override init() {}
     
     static let shared = UdacityClient()
-    
+
     // MARK: - Properties
     
     var session = URLSession.shared
-    
-    func fetchStudents(completionHandler: @escaping (_ result: [Student]?, _ error: NSError?) -> Void) {
-
-        let parameters = [String: AnyObject] ()
-        
-        _ = taskForGETMethod(Methods.Students, parameters: parameters as [String:AnyObject]) { (results, error) in
-            
-            if let error = error {
-                completionHandler(nil, error)
-            } else {
-                print("success")
-                //print(results)
-                //print("count")
-                //print((results as! [[String:AnyObject]]).count)
-                
-                var students = [Student] ()
-                
-                if let results = results as? [String:AnyObject] {
-                    if let resultsArray = results["results"] as? [[String:AnyObject]] {
-                        print(resultsArray.count)
-                        print("iterating over results")
-                        
-                        for (index, item) in resultsArray.enumerated() {
-                            if let student = Student(dictionary: item) {
-                                students.append(student)
-                                //print(student)
-                            }
-                            else {
-                                print("could not create and append student at index: \(index)")
-                            }
-                        }
-                    }
-                    completionHandler(students, nil)
-                } else {
-                    completionHandler(nil, NSError(domain: "fetchStudents", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse Students"]))
-                }
-                
-                print(students.count)
-                
-            }
+    var account: UdacityAccount? = nil
+    var mySelf: Student? = nil {
+        didSet {
+            print("mySelf set")
+            print(mySelf)
         }
     }
     
-    func taskForGETMethod(_ method: String, parameters: [String:AnyObject], completionHandler: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+    func fetchStudents(completionHandler: @escaping (_ result: [Student]?, _ error: NSError?) -> Void) {
+
+        let parameters = ParametersArray ()
+        _ = taskForGETMethod(Methods.Students, parameters: parameters as ParametersArray) { (results, error) in
+            
+            guard error == nil else {
+                completionHandler(nil, error)
+                return
+            }
+            
+            var students = [Student] ()
+            
+            guard
+                let results = results as? JSONDictionary,
+                let resultsArray = results["results"] as? JSONArray
+            else {
+                completionHandler(nil, NSError(domain: "fetchStudents", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse Students"]))
+                return
+            }
+            
+            for (index, item) in resultsArray.enumerated() {
+                if let student = Student(dictionary: item) {
+                    students.append(student)
+                }
+                else {
+                    print("could not create and append student at index: \(index). Incorrect keys.")
+                }
+            }
+            completionHandler(students, nil)
+        }
+    }
+    
+    func fetchStudent(_ id: String, completionHandler: @escaping (_ result: Student?, _ error: NSError?) -> Void) {
+        
+        print("fetchStudent called with ID: \(id)")
+
+        let parameters = [UdacityClient.StudentParameterKeys.wherekey:"{\"\(UdacityClient.StudentParameterJSONBodyKey.uniqueKey)\":\"\(id)\"}"]
+        print(parameters)
+        
+        _ = taskForGETMethod(Methods.Students, parameters: parameters as ParametersArray) { (results, error) in
+            
+            guard error == nil else {
+                completionHandler(nil, error)
+                return
+            }
+            
+            print(results)
+            guard
+                let results = results as? JSONDictionary,
+                let resultsArray = results["results"] as? [AnyObject],
+                let firstEntry = resultsArray[0] as? JSONDictionary,
+                let mySelf = Student(dictionary: firstEntry)
+            else {
+                completionHandler(nil, NSError(domain: "fetchStudent", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not evaluate json student data"]))
+                return
+            }
+            completionHandler(mySelf, nil)
+        }
+        
+    }
+    
+    func taskForGETMethod(_ method: String, parameters: ParametersArray, completionHandler: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
         
         let request = NSMutableURLRequest(url: udacityURLFromParameters(parameters, withPathExtension: method))
         request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
@@ -74,7 +100,7 @@ final class UdacityClient: NSObject {
             
             func sendError(_ error: String) {
                 print(error)
-                let userInfo = [NSLocalizedDescriptionKey : error]
+                let userInfo = [NSLocalizedDescriptionKey:error]
                 completionHandler(nil, NSError(domain: "taskForGETMethod", code: 1, userInfo: userInfo))
             }
             
@@ -84,7 +110,6 @@ final class UdacityClient: NSObject {
             }
             
             guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
-                //print("Statuscode: \((response as? HTTPURLResponse)?.statusCode))")
                 sendError("Your request returned a status code other than 2xx!")
                 return
             }
@@ -104,7 +129,7 @@ final class UdacityClient: NSObject {
     
     // MARK: - POST Method
     
-    func taskForPOSTMethod(_ method: String, parameters: [String:AnyObject], jsonBody: String, completionHandlerForPOST: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+    func taskForPOSTMethod(_ method: String, parameters: ParametersArray, jsonBody: String, completionHandlerForPOST: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
         
         /* 1. Set the parameters */
         //var parametersWithApiKey = parameters
@@ -163,7 +188,7 @@ final class UdacityClient: NSObject {
     }
     
     // create a URL from parameters
-    private func udacityURLFromParameters(_ parameters: [String:AnyObject], withPathExtension: String? = nil) -> URL {
+    private func udacityURLFromParameters(_ parameters: ParametersArray, withPathExtension: String? = nil) -> URL {
         
         var components = URLComponents()
         components.scheme = UdacityClient.Constants.ApiScheme

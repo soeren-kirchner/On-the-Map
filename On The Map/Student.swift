@@ -13,7 +13,7 @@ struct Student {
     let latitude, longitude: Double
     let createdAt, updatedAt: Date
     
-    init?(dictionary: [String:AnyObject]) {
+    init?(dictionary: JSONDictionary) {
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat=UdacityClient.Constants.StudentsDateFormat

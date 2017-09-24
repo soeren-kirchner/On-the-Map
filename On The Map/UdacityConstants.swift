@@ -38,4 +38,12 @@ extension UdacityClient {
         static let updatedAt = "updatedAt" // value: Date
     }
     
+    struct StudentParameterKeys {
+        static let wherekey = "where"
+    }
+    
+    struct StudentParameterJSONBodyKey {
+        static let uniqueKey = "uniqueKey"
+    }
+    
 }

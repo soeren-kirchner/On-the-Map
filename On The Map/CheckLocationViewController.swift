@@ -42,7 +42,8 @@ class CheckLocationViewController: UIViewController {
     }
     
     @IBAction func addLocation(_ sender: Any) {
-        
+        //self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
+        performSegue(withIdentifier: "unwindToStudentsMap", sender: self)
     }
 
     /*
