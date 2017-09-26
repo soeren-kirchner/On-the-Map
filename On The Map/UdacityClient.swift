@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MapKit
 
 final class UdacityClient: NSObject {
     
@@ -27,67 +28,7 @@ final class UdacityClient: NSObject {
         }
     }
     
-    func fetchStudents(completionHandler: @escaping (_ result: [Student]?, _ error: NSError?) -> Void) {
-
-        let parameters = ParametersArray ()
-        _ = taskForGETMethod(Methods.Students, parameters: parameters as ParametersArray) { (results, error) in
-            
-            guard error == nil else {
-                completionHandler(nil, error)
-                return
-            }
-            
-            var students = [Student] ()
-            
-            guard
-                let results = results as? JSONDictionary,
-                let resultsArray = results["results"] as? JSONArray
-            else {
-                completionHandler(nil, NSError(domain: "fetchStudents", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse Students"]))
-                return
-            }
-            
-            for (index, item) in resultsArray.enumerated() {
-                if let student = Student(dictionary: item) {
-                    students.append(student)
-                }
-                else {
-                    print("could not create and append student at index: \(index). Incorrect keys.")
-                }
-            }
-            completionHandler(students, nil)
-        }
-    }
-    
-    func fetchStudent(_ id: String, completionHandler: @escaping (_ result: Student?, _ error: NSError?) -> Void) {
-        
-        print("fetchStudent called with ID: \(id)")
-
-        let parameters = [UdacityClient.StudentParameterKeys.wherekey:"{\"\(UdacityClient.StudentParameterJSONBodyKey.uniqueKey)\":\"\(id)\"}"]
-        print(parameters)
-        
-        _ = taskForGETMethod(Methods.Students, parameters: parameters as ParametersArray) { (results, error) in
-            
-            guard error == nil else {
-                completionHandler(nil, error)
-                return
-            }
-            
-            print(results)
-            guard
-                let results = results as? JSONDictionary,
-                let resultsArray = results["results"] as? [AnyObject],
-                let firstEntry = resultsArray[0] as? JSONDictionary,
-                let mySelf = Student(dictionary: firstEntry)
-            else {
-                completionHandler(nil, NSError(domain: "fetchStudent", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not evaluate json student data"]))
-                return
-            }
-            completionHandler(mySelf, nil)
-        }
-        
-    }
-    
+   
     func taskForGETMethod(_ method: String, parameters: ParametersArray, completionHandler: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
         
         let request = NSMutableURLRequest(url: udacityURLFromParameters(parameters, withPathExtension: method))
@@ -125,22 +66,20 @@ final class UdacityClient: NSObject {
         task.resume()
         return task
     }
-
     
     // MARK: - POST Method
     
     func taskForPOSTMethod(_ method: String, parameters: ParametersArray, jsonBody: String, completionHandlerForPOST: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
         
-        /* 1. Set the parameters */
-        //var parametersWithApiKey = parameters
-        //parametersWithApiKey[ParameterKeys.ApiKey] = Constants.ApiKey as AnyObject?
-        
-        /* 2/3. Build the URL, Configure the request */
         let request = NSMutableURLRequest(url: udacityURLFromParameters(parameters, withPathExtension: method))
         request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
+        request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
+        //request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = jsonBody.data(using: String.Encoding.utf8)
+        
+        print(request)
         
         let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
             

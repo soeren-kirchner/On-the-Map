@@ -38,7 +38,7 @@ extension UdacityClient {
             }
             
             guard let data = data else {
-                sendError("No data was returned by the request!")
+                sendError("No data were returned by the request!")
                 return
             }
 
@@ -49,4 +49,40 @@ extension UdacityClient {
         }
         task.resume()
     }
+    
+    func fetchMyPublicData (completionHandler: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) {
+        print("fetchMyPublicData")
+        guard let key = UdacityClient.shared.account?.key else {
+            print("key is nil")
+            return
+        }
+        let request = NSMutableURLRequest(url: URL(string: "https://www.udacity.com/api/users/\(key)")!)
+        let session = URLSession.shared
+        let task = session.dataTask(with: request as URLRequest) { data, response, error in
+            print(error)
+            
+            func sendError(_ error: String) {
+                print(error)
+                let userInfo = [NSLocalizedDescriptionKey : error]
+                completionHandler(nil, NSError(domain: "udacityLogin", code: 1, userInfo: userInfo))
+            }
+            
+            guard error == nil else {
+                print("error")
+                return
+            }
+            
+            guard let data = data else {
+                sendError("No data were returned by the request!")
+                return
+            }
+            
+            let range = Range(5..<data.count)
+            let newData = data.subdata(in: range) /* subset response data! */
+            print(NSString(data: newData, encoding: String.Encoding.utf8.rawValue)!)
+            self.convertDataWithCompletionHandler(newData, completionHandlerForConvertData: completionHandler)
+        }
+        task.resume()
+    }
+    
 }

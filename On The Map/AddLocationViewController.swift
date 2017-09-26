@@ -11,13 +11,11 @@ import CoreLocation
 
 class AddLocationViewController: UIViewController {
     
-    
-    
     @IBOutlet weak var addressTextField: UITextField!
     @IBOutlet weak var urlTextField: UITextField!
 
-    var address = ""
-    var urlString = ""
+    var mapString = ""
+    var mediaURL = ""
     var location: CLLocation? = nil
     
     
@@ -42,25 +40,25 @@ class AddLocationViewController: UIViewController {
     
     @IBAction func getLocation(_ sender: Any) {
         
-        self.address = addressTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-        self.urlString = urlTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        self.mapString = addressTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        self.mediaURL = urlTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         
-        print("address: \(self.address)")
-        print("urlString: \(self.urlString)")
+        print("address: \(self.mapString)")
+        print("urlString: \(self.mediaURL)")
  
-        if self.address.isEmpty {
+        if self.mapString.isEmpty {
             self.showAlert("Please enter a address")
             return
         }
         
-        guard let _ = URL(string: urlString) else {
+        guard let _ = URL(string: mediaURL) else {
             self.showAlert("Please enter a valid URL")
             return
         }
    
         let geoCoder = CLGeocoder()
         
-        geoCoder.geocodeAddressString(address) { (placemarks, error) in
+        geoCoder.geocodeAddressString(mapString) { (placemarks, error) in
             
             guard error == nil else {
                 self.showAlert("Could'nt get information to your Address")
@@ -73,15 +71,9 @@ class AddLocationViewController: UIViewController {
                 self.showAlert("Could'nt find any Coordinates to your Address")
                 return
             }
-//            let lat = location.coordinate.latitude
-//            let lon = location.coordinate.longitude
-//            print(lat)
-//            print(lon)
-            
             
             DispatchQueue.main.async {
                 self.performSegue(withIdentifier: "AddToCeckLocationSegue", sender: self)
-
             }
         }
     }
@@ -90,10 +82,10 @@ class AddLocationViewController: UIViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? CheckLocationViewController {
+            destination.mediaURL = self.mediaURL
+            destination.mapString = self.mapString
             destination.location = self.location
         }
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
     }
 
 }

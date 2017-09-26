@@ -10,7 +10,6 @@ import UIKit
 
 typealias JSONDictionary = [String:AnyObject]
 typealias JSONArray = [JSONDictionary]
-
 typealias ParametersArray = [String:AnyObject]
 
 @UIApplicationMain
@@ -18,10 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-        print("Here we go");
         return true
     }
 

@@ -23,6 +23,12 @@ extension UdacityClient {
         static let Students = "/parse/classes/StudentLocation"
     }
     
+    struct UserResponseKeys {
+        static let key = "key"
+        static let firstname = "first_name"
+        static let lastname = "last_name"
+    }
+    
     // MARK: Students
     
     struct StudentResponseKeys {
