@@ -11,6 +11,8 @@ import MapKit
 
 final class UdacityClient: NSObject {
     
+    typealias UdacityDefaultCompletionHandler = (_ result: AnyObject?, _ error: NSError?) -> Void
+    
     // MARK: shared Instance (Singleton)
     
     private override init() {}
@@ -28,6 +30,12 @@ final class UdacityClient: NSObject {
         }
     }
     
+    func sendError(_ error: String, domain: String = #function, completionHandler: (_ result: AnyObject?, _ error: NSError?) -> Void) {
+        print("ERROR: \(error)")
+        print("IN DOMAIN: \(domain)")
+        let userInfo = [NSLocalizedDescriptionKey : error]
+        completionHandler(nil, NSError(domain: domain, code: 1, userInfo: userInfo))
+    }
    
     func taskForGETMethod(_ method: String, parameters: ParametersArray, completionHandler: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
         
@@ -39,37 +47,56 @@ final class UdacityClient: NSObject {
         
         let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
             
-            func sendError(_ error: String) {
-                print(error)
-                let userInfo = [NSLocalizedDescriptionKey:error]
-                completionHandler(nil, NSError(domain: "taskForGETMethod", code: 1, userInfo: userInfo))
-            }
+//            func sendError(_ error: String) {
+//                print(error)
+//                let userInfo = [NSLocalizedDescriptionKey:error]
+//                completionHandler(nil, NSError(domain: "taskForGETMethod", code: 1, userInfo: userInfo))
+//            }
             
-            guard (error == nil) else {
-                sendError("There was an error with your request: \(error!)")
-                return
+//            guard (error == nil) else {
+//                self.sendError("There was an error with your request: \(error!)", completionHandler: completionHandler)
+//                return
+//            }
+//
+//            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
+//                self.sendError("Your request returned a status code other than 2xx!", completionHandler: completionHandler)
+//                return
+//            }
+//
+//            guard let data = data else {
+//                self.sendError("No data was returned by the request!", completionHandler: completionHandler)
+//                return
+//            }
+            if let data = self.checkForErrors(data: data, response: response, error: error, completionHandler: completionHandler) {
+                self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandler)
             }
-            
-            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
-                sendError("Your request returned a status code other than 2xx!")
-                return
-            }
-            
-            guard let data = data else {
-                sendError("No data was returned by the request!")
-                return
-            }
-            
-            self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandler)
         }
         
         task.resume()
         return task
     }
     
+    func checkForErrors(data: Data?, response: URLResponse?, error: Error?, domainForError: String = #function, completionHandler: UdacityDefaultCompletionHandler) -> Data? {
+        guard (error == nil) else {
+            self.sendError("There was an error with your request: \(error!)", domain: domainForError, completionHandler: completionHandler)
+            return nil
+        }
+        
+        guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
+            self.sendError("Your request returned a status code other than 2xx!", domain: domainForError, completionHandler: completionHandler)
+            return nil
+        }
+        
+        guard let data = data else {
+            self.sendError("No data was returned by the request!", domain: domainForError, completionHandler: completionHandler)
+            return nil
+        }
+        return data
+    }
+    
     // MARK: - POST Method
     
-    func taskForPOSTMethod(_ method: String, parameters: ParametersArray, jsonBody: String, completionHandlerForPOST: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+    func taskForPOSTMethod(_ method: String, parameters: ParametersArray, jsonBody: String, completionHandler: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
         
         let request = NSMutableURLRequest(url: udacityURLFromParameters(parameters, withPathExtension: method))
         request.httpMethod = "POST"
@@ -83,28 +110,30 @@ final class UdacityClient: NSObject {
         
         let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
             
-            func sendError(_ error: String) {
-                print(error)
-                let userInfo = [NSLocalizedDescriptionKey : error]
-                completionHandlerForPOST(nil, NSError(domain: "taskForPOSTMethod", code: 1, userInfo: userInfo))
-            }
+//            func sendError(_ error: String) {
+//                print(error)
+//                let userInfo = [NSLocalizedDescriptionKey : error]
+//                completionHandlerForPOST(nil, NSError(domain: "taskForPOSTMethod", code: 1, userInfo: userInfo))
+//            }
             
-            guard (error == nil) else {
-                sendError("There was an error with your request: \(error!)")
-                return
-            }
+//            guard (error == nil) else {
+//                self.sendError("There was an error with your request: \(error!)", completionHandler: completionHandler)
+//                return
+//            }
+//
+//            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
+//                self.sendError("Your request returned a status code other than 2xx!", completionHandler: completionHandler)
+//                return
+//            }
+//
+//            guard let data = data else {
+//                self.sendError("No data was returned by the request!", completionHandler: completionHandler)
+//                return
+//            }
             
-            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
-                sendError("Your request returned a status code other than 2xx!")
-                return
+            if let data = self.checkForErrors(data: data, response: response, error: error, completionHandler: completionHandler) {
+                self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandler)
             }
-            
-            guard let data = data else {
-                sendError("No data was returned by the request!")
-                return
-            }
-            
-            self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForPOST)
         }
         
         task.resume()

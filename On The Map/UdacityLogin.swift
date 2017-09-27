@@ -21,31 +21,33 @@ extension UdacityClient {
         let session = URLSession.shared
         let task = session.dataTask(with: request as URLRequest) { data, response, error in
             
-            func sendError(_ error: String) {
-                print(error)
-                let userInfo = [NSLocalizedDescriptionKey : error]
-                completionHandler(nil, NSError(domain: "udacityLogin", code: 1, userInfo: userInfo))
-            }
+//            func sendError(_ error: String) {
+//                print(error)
+//                let userInfo = [NSLocalizedDescriptionKey : error]
+//                completionHandler(nil, NSError(domain: "udacityLogin", code: 1, userInfo: userInfo))
+//            }
             
-            guard (error == nil) else {
-                sendError("There was an error with your request: \(error!)")
-                return
-            }
+//            guard (error == nil) else {
+//                self.sendError("There was an error with your request: \(error!)", completionHandler: completionHandler)
+//                return
+//            }
+//
+//            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
+//                self.sendError("Your request returned a status code other than 2xx!", completionHandler: completionHandler)
+//                return
+//            }
+//
+//            guard let data = data else {
+//                self.sendError("No data were returned by the request!", completionHandler: completionHandler)
+//                return
+            //            }
             
-            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
-                sendError("Your request returned a status code other than 2xx!")
-                return
+            if let data = self.checkForErrors(data: data, response: response, error: error, completionHandler: completionHandler) {
+                let range = Range(5..<data.count)
+                let newData = data.subdata(in: range) /* subset response data! */
+                print(NSString(data: newData, encoding: String.Encoding.utf8.rawValue)!)
+                self.convertDataWithCompletionHandler(newData, completionHandlerForConvertData: completionHandler)
             }
-            
-            guard let data = data else {
-                sendError("No data were returned by the request!")
-                return
-            }
-
-            let range = Range(5..<data.count)
-            let newData = data.subdata(in: range) /* subset response data! */
-            print(NSString(data: newData, encoding: String.Encoding.utf8.rawValue)!)
-            self.convertDataWithCompletionHandler(newData, completionHandlerForConvertData: completionHandler)
         }
         task.resume()
     }
@@ -61,26 +63,53 @@ extension UdacityClient {
         let task = session.dataTask(with: request as URLRequest) { data, response, error in
             print(error)
             
-            func sendError(_ error: String) {
-                print(error)
-                let userInfo = [NSLocalizedDescriptionKey : error]
-                completionHandler(nil, NSError(domain: "udacityLogin", code: 1, userInfo: userInfo))
-            }
+//            func sendError(_ error: String) {
+//                print(error)
+//                let userInfo = [NSLocalizedDescriptionKey : error]
+//                completionHandler(nil, NSError(domain: "udacityLogin", code: 1, userInfo: userInfo))
+//            }
             
-            guard error == nil else {
-                print("error")
-                return
-            }
+//            guard error == nil else {
+//                print("error")
+//                return
+//            }
+//
+//            guard let data = data else {
+//                self.sendError("No data were returned by the request!", completionHandler: completionHandler)
+//                return
+//            }
             
-            guard let data = data else {
-                sendError("No data were returned by the request!")
+            guard let data = self.checkForErrors(data: data, response: response, error: error, completionHandler: completionHandler) else {
                 return
             }
             
             let range = Range(5..<data.count)
             let newData = data.subdata(in: range) /* subset response data! */
             print(NSString(data: newData, encoding: String.Encoding.utf8.rawValue)!)
-            self.convertDataWithCompletionHandler(newData, completionHandlerForConvertData: completionHandler)
+            self.convertDataWithCompletionHandler(newData) { data, error in
+                
+                // TODO: test error! because of access though closure in closure
+                
+                guard error == nil else {
+                    // TODO: handle error
+                    print(error)
+                    self.sendError("could not convert data", completionHandler: completionHandler)
+                    return
+                }
+                
+                guard let userData = data as? JSONDictionary,
+                    let user = userData["user"] as? JSONDictionary else {
+                    print("something wrong with data")
+                    return
+                }
+                
+                if let user = UdacityUser(dictionary: user) {
+                    print(user)
+                }
+                else {
+                    print("something went wrong")
+                }
+            }
         }
         task.resume()
     }

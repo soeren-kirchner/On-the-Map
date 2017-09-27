@@ -75,12 +75,17 @@ class LoginViewController: UIViewController {
             print(account)
             print(UdacityClient.shared.account?.key)
             
-            UdacityClient.shared.fetchMyPublicData() { data, error in
+            UdacityClient.shared.fetchMyPublicData() { user, error in
                 
+                guard let user = user as? UdacityUser else {
+                    return
+                }
                 print(error)
-                print(data)
+                print(user)
                 
             }
+            
+            
             
 //            UdacityClient.shared.fetchStudent(account.key) { student, error in
 //
