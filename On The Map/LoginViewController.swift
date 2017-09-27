@@ -127,11 +127,11 @@ class LoginViewController: UIViewController {
         return keyboardSize.cgRectValue.height
     }
     
-    func keyboardWillShow(_ notification:Notification) {
+    @objc func keyboardWillShow(_ notification:Notification) {
         view.frame.origin.y = 0-getKeyboardHeight(notification)
     }
     
-    func keyboardWillHide(_ notification:Notification) {
+    @objc func keyboardWillHide(_ notification:Notification) {
         view.frame.origin.y = 0
     }
     

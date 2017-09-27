@@ -14,7 +14,7 @@ extension UdacityClient {
     func fetchStudents(completionHandler: @escaping (_ result: [Student]?, _ error: NSError?) -> Void) {
         
         let parameters = ParametersArray ()
-        _ = taskForGETMethod(Methods.Students, parameters: parameters as ParametersArray) { (results, error) in
+        _ = taskForGETAndPOST(Methods.Students, parameters: parameters as ParametersArray) { (results, error) in
             
             guard error == nil else {
                 completionHandler(nil, error)
@@ -50,7 +50,7 @@ extension UdacityClient {
         let parameters = [UdacityClient.StudentParameterKeys.wherekey:"{\"\(UdacityClient.StudentParameterJSONBodyKey.uniqueKey)\":\"\(id)\"}"]
         print(parameters)
         
-        _ = taskForGETMethod(Methods.Students, parameters: parameters as ParametersArray) { (results, error) in
+        _ = taskForGETAndPOST(Methods.Students, parameters: parameters as ParametersArray) { (results, error) in
             
             guard error == nil else {
                 completionHandler(nil, error)

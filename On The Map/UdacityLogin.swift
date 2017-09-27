@@ -15,7 +15,15 @@ extension UdacityClient {
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        let httpBody = "{\"udacity\": {\"username\": \"\(user)\", \"password\": \"\(password)\"}}"
+//        let httpBody = "{\"udacity\": {\"username\": \"\(user)\", \"password\": \"\(password)\"}}"
+        let httpBody = """
+            {
+                "udacity": {
+                    "username": "\(user)",
+                    "password": "\(password)"
+                }
+            }
+        """
         print(httpBody)
         request.httpBody = httpBody.data(using: String.Encoding.utf8)
         let session = URLSession.shared

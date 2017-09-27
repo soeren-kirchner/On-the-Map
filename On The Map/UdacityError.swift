@@ -6,8 +6,9 @@
 //  Copyright © 2017 Sören Kirchner. All rights reserved.
 //
 
-import Foundation
+//import Foundation
+//
+//enum StudentsConversionError: Error {
+//    case KeyNotFoundInDictionary(Message: String)
+//}
 
-enum StudentsConversionError: Error {
-    case KeyNotFoundInDictionary(Message: String)
-}
