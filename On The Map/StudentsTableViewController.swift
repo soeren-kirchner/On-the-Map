@@ -38,7 +38,13 @@ class StudentsTableViewController: UITableViewController {
                 self.showAlert("could not load data")
                 return
             }
-            self.students = results!
+            
+            // TODO: errorhandling
+            guard let students = results as? [Student] else {
+                self.showAlert("Something went wrong")
+                return
+            }
+            self.students = students
             self.reloadData()
         }
     }

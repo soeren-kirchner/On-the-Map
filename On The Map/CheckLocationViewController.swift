@@ -48,16 +48,18 @@ class CheckLocationViewController: UIViewController {
         guard
             let location = location,
             let mediaURL = mediaURL,
-            let mapString = mapString,
-            let student = UdacityClient.shared.mySelf
+            let mapString = mapString
+            //let student = UdacityClient.shared.mySelf
         else {
             // TODO: implement error
             return
         }
         
-        UdacityClient.shared.add(student: student, location: location, mapString: mapString, mediaURL: mediaURL) { response, error in
+        //UdacityClient.shared.add(student: student, location: location, mapString: mapString, mediaURL: mediaURL) { response, error in
             
-        }
+        //}
+    
+    
         //self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
 //        performSegue(withIdentifier: "unwindToStudentsMap", sender: self)
     }

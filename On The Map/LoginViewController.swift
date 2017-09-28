@@ -68,21 +68,34 @@ class LoginViewController: UIViewController {
                 let accountData = data["account"] as? JSONDictionary,
                 let account = UdacityAccount(dictionary: accountData)
             else {
+                
                 return
             }
             
             UdacityClient.shared.account = account
             print(account)
-            print(UdacityClient.shared.account?.key)
+            print(UdacityClient.shared.account!.key)
             
             UdacityClient.shared.fetchMyPublicData() { user, error in
                 
-                guard let user = user as? UdacityUser else {
+                guard error == nil else {
+                    self.showAlert(error!.localizedDescription)
                     return
                 }
-                print(error)
+                
+                guard let user = user as? UdacityUser else {
+                    self.showAlert("Could nozt fetch user for this account")
+                    return
+                }
+                
+                UdacityClient.shared.user = user
+                
+                //print(error!)
                 print(user)
                 
+                DispatchQueue.main.async {
+                    self.performSegue(withIdentifier: "LoggedInSegue", sender: self)
+                }
             }
             
             
@@ -103,9 +116,7 @@ class LoginViewController: UIViewController {
 //                UdacityClient.shared.mySelf = student
 //            }
             
-            DispatchQueue.main.async {
-                self.performSegue(withIdentifier: "LoggedInSegue", sender: self)
-            }
+            
         }
     }
 

@@ -34,12 +34,16 @@ class StudentsMapViewController: UIViewController {
     func fetchStudents() {
         UdacityClient.shared.fetchStudents() { results, error in
             guard error == nil else {
-                print(error!.localizedDescription)
                 self.showAlert("could not load data")
                 return
             }
             
-            self.students = results!
+            guard let students = results as? [Student] else {
+                self.showAlert("something went wrong")
+                return
+            }
+            
+            self.students = students
             
             var annotations = [MKPointAnnotation]()
             
