@@ -65,11 +65,20 @@ extension UdacityClient {
             print(results)
             guard
                 let results = results as? JSONDictionary,
-                let resultsArray = results["results"] as? JSONArray,
-                //let firstEntry = resultsArray[0] as? JSONDictionary,
-                let mySelf = Student(dictionary: resultsArray[0])
+                let resultsArray = results["results"] as? JSONArray else {
+                    completionHandler(nil, NSError(domain: "fetchStudent", code: 100, userInfo: [NSLocalizedDescriptionKey: "Data corrupt"]))
+                    return
+            }
+            
+            guard resultsArray.count > 0 else {
+                print("resultArray without value")
+                completionHandler(nil, NSError(domain: "fetchStudent", code: 101, userInfo: [NSLocalizedDescriptionKey: "User still not exist"]))
+                return
+            }
+                
+            guard let mySelf = Student(dictionary: resultsArray[0])
                 else {
-                    completionHandler(nil, NSError(domain: "fetchStudent", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not evaluate json student data"]))
+                    completionHandler(nil, NSError(domain: "fetchStudent", code: 102, userInfo: [NSLocalizedDescriptionKey: "Could not evaluate json student data"]))
                     return
             }
             completionHandler(mySelf as AnyObject, nil)

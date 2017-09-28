@@ -55,15 +55,47 @@ class CheckLocationViewController: UIViewController {
             return
         }
         
+        guard let key = UdacityClient.shared.account?.key else {
+            // TODO: ERROR
+            return
+        }
+        
+        UdacityClient.shared.fetchStudent("123") { result, error in
+        
+            guard error == nil else {
+                if error!.code == 101 {
+                    print("user does not exist")
+                }
+                else {
+                    print("something wrong here")
+                    // TODO: show error
+                }
+                return
+            }
+       
+            guard let student = result as? Student else {
+                // TODO: show error
+                return
+            }
+            print(student)
+            
+            
+        }
+        
+        
         //UdacityClient.shared.add(student: student, location: location, mapString: mapString, mediaURL: mediaURL) { response, error in
             
         //}
-    
-    
-        //self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
-//        performSegue(withIdentifier: "unwindToStudentsMap", sender: self)
-    }
 
+    }
+    
+    func unwind() {
+        DispatchQueue.main.async {
+            self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
+            self.performSegue(withIdentifier: "unwindToStudentsMap", sender: self)
+        }
+    }
+    
     /*
     // MARK: - Navigation
 
