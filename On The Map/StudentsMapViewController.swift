@@ -23,23 +23,23 @@ class StudentsMapViewController: UIViewController {
         fetchStudents()
     }
     
-    func showAlert(_ alert: String) {
-        DispatchQueue.main.async {
-            let alertViewController = UIAlertController(title: "Update Failure", message: alert, preferredStyle: .alert)
-            alertViewController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(alertViewController, animated: true, completion: nil)
-        }
-    }
+//    func showAlert(_ alert: String) {
+//        DispatchQueue.main.async {
+//            let alertViewController = UIAlertController(title: "Update Failure", message: alert, preferredStyle: .alert)
+//            alertViewController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+//            self.present(alertViewController, animated: true, completion: nil)
+//        }
+//    }
     
     func fetchStudents() {
         UdacityClient.shared.fetchStudents() { results, error in
             guard error == nil else {
-                self.showAlert("could not load data")
+                self.showAlert(title: "ERROR", alert: "could not load data")
                 return
             }
             
             guard let students = results as? [Student] else {
-                self.showAlert("something went wrong")
+                self.showAlert(title: "ERROR", alert: "data not readable")
                 return
             }
             

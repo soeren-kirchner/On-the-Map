@@ -30,13 +30,13 @@ class AddLocationViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func showAlert(_ alert: String) {
-        DispatchQueue.main.async {
-            let alertViewController = UIAlertController(title: "ERROR", message: alert, preferredStyle: .alert)
-            alertViewController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(alertViewController, animated: true, completion: nil)
-        }
-    }
+//    func showAlert(_ alert: String) {
+//        DispatchQueue.main.async {
+//            let alertViewController = UIAlertController(title: "ERROR", message: alert, preferredStyle: .alert)
+//            alertViewController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+//            self.present(alertViewController, animated: true, completion: nil)
+//        }
+//    }
     
     @IBAction func getLocation(_ sender: Any) {
         
@@ -47,12 +47,12 @@ class AddLocationViewController: UIViewController {
         print("urlString: \(self.mediaURL)")
  
         if self.mapString.isEmpty {
-            self.showAlert("Please enter a address")
+            self.showAlert(title: "No Address", alert: "Please enter a address")
             return
         }
         
         guard let _ = URL(string: mediaURL) else {
-            self.showAlert("Please enter a valid URL")
+            self.showAlert(title: "No URL", alert: "Please enter a valid URL")
             return
         }
    
@@ -61,14 +61,14 @@ class AddLocationViewController: UIViewController {
         geoCoder.geocodeAddressString(mapString) { (placemarks, error) in
             
             guard error == nil else {
-                self.showAlert("Could'nt get information to your Address")
+                self.showAlert(title: "Address not found", alert: "Could'nt get information to your Address")
                 return
             }
             
             self.location = placemarks?.first?.location
             
             if self.location == nil {
-                self.showAlert("Could'nt find any Coordinates to your Address")
+                self.showAlert(title: "No Coordinates", alert: "Could'nt find any Coordinates to your Address")
                 return
             }
             

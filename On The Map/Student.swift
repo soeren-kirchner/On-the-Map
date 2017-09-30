@@ -8,6 +8,11 @@
 
 import Foundation
 
+struct StudentBaseInformation {
+    let firstName, lastName, mapString, mediaURL: String
+    let latitude, longitude: Double
+}
+
 struct Student {
     let objectId, uniqueKey, firstName, lastName, mapString, mediaURL: String
     let latitude, longitude: Double

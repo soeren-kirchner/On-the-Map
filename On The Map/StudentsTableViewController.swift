@@ -17,14 +17,14 @@ class StudentsTableViewController: UITableViewController {
         fetchStudents()
     }
 
-    func showAlert(_ alert: String) {
-        DispatchQueue.main.async {
-            let alertViewController = UIAlertController(title: "Update Failure", message: alert, preferredStyle: .alert)
-            alertViewController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(alertViewController, animated: true, completion: nil)
-        }
-    }
-    
+//    func showAlert(_ alert: String) {
+//        DispatchQueue.main.async {
+//            let alertViewController = UIAlertController(title: "Update Failure", message: alert, preferredStyle: .alert)
+//            alertViewController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+//            self.present(alertViewController, animated: true, completion: nil)
+//        }
+//    }
+//    
     func reloadData() {
         DispatchQueue.main.async {
             self.tableView.reloadData()
@@ -35,13 +35,13 @@ class StudentsTableViewController: UITableViewController {
         UdacityClient.shared.fetchStudents() { results, error in
             guard error == nil else {
                 print(error!.localizedDescription)
-                self.showAlert("could not load data")
+                self.showAlert(title: "ERROR", alert: "could not load data")
                 return
             }
             
             // TODO: errorhandling
             guard let students = results as? [Student] else {
-                self.showAlert("Something went wrong")
+                self.showAlert(title: "ERROR", alert: "data not readable")
                 return
             }
             self.students = students

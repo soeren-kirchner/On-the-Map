@@ -38,13 +38,13 @@ class LoginViewController: UIViewController {
 
     // MARK: - Navigation
     
-    func showAlert(_ alert: String) {
-        DispatchQueue.main.async {
-            let alertViewController = UIAlertController(title: "Login Failure", message: alert, preferredStyle: .alert)
-            alertViewController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(alertViewController, animated: true, completion: nil)
-        }
-    }
+//    func showAlert(_ alert: String) {
+//        DispatchQueue.main.async {
+//            let alertViewController = UIAlertController(title: "Login Failure", message: alert, preferredStyle: .alert)
+//            alertViewController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+//            self.present(alertViewController, animated: true, completion: nil)
+//        }
+//    }
     
     @IBAction func login(_ sender: Any) {
         loginActivityIndicator.startAnimating()
@@ -59,7 +59,7 @@ class LoginViewController: UIViewController {
             
             guard error == nil else {
                 print(error.debugDescription)
-                self.showAlert(error!.localizedDescription)
+                self.showAlert(title: "Login Error", alert: error!.localizedDescription)
                 return
             }
             
@@ -79,12 +79,12 @@ class LoginViewController: UIViewController {
             UdacityClient.shared.fetchMyPublicData() { user, error in
                 
                 guard error == nil else {
-                    self.showAlert(error!.localizedDescription)
+                    self.showAlert(title: "Fetching Data Error", alert: error!.localizedDescription)
                     return
                 }
                 
                 guard let user = user as? UdacityUser else {
-                    self.showAlert("Could nozt fetch user for this account")
+                    self.showAlert(title: "Fetching Data Error", alert: "Could nozt fetch user for this account")
                     return
                 }
                 
@@ -122,29 +122,7 @@ class LoginViewController: UIViewController {
 
     // MARK: - Keybord things
     
-    func subscribeToKeyboardNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: .UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: .UIKeyboardWillHide, object: nil)
-    }
-    
-    func unsubscribeFromKeyboardNotifications() {
-        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide, object: nil)
-    }
-    
-    func getKeyboardHeight(_ notification:Notification) -> CGFloat {
-        let userInfo = notification.userInfo
-        let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue // of CGRect
-        return keyboardSize.cgRectValue.height
-    }
-    
-    @objc func keyboardWillShow(_ notification:Notification) {
-        view.frame.origin.y = 0-getKeyboardHeight(notification)
-    }
-    
-    @objc func keyboardWillHide(_ notification:Notification) {
-        view.frame.origin.y = 0
-    }
+
     
 }
 

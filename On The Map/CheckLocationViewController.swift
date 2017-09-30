@@ -49,7 +49,6 @@ class CheckLocationViewController: UIViewController {
             let location = location,
             let mediaURL = mediaURL,
             let mapString = mapString
-            //let student = UdacityClient.shared.mySelf
         else {
             // TODO: implement error
             return
@@ -61,10 +60,20 @@ class CheckLocationViewController: UIViewController {
         }
         
         UdacityClient.shared.fetchStudent("123") { result, error in
-        
+//        UdacityClient.shared.fetchStudent(key) { result, error in
+            
             guard error == nil else {
                 if error!.code == 101 {
                     print("user does not exist")
+                    DispatchQueue.main.async {
+                        let alertViewController = UIAlertController(title: "Student not in Database", message: "Add the Student to the Database?", preferredStyle: .alert)
+                        alertViewController.addAction(UIAlertAction(title: "OK", style: .default) { action in
+                            UdacityClient.shared.add(location: location, mapString: mapString, mediaURL: mediaURL, completionHandler: self.addOrUpdateCompletionHandler)
+                        })
+                        alertViewController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+                        self.present(alertViewController, animated: true, completion: nil)
+                    }
+                    
                 }
                 else {
                     print("something wrong here")
@@ -72,13 +81,14 @@ class CheckLocationViewController: UIViewController {
                 }
                 return
             }
-       
+            
             guard let student = result as? Student else {
                 // TODO: show error
                 return
             }
             print(student)
             
+            UdacityClient.shared.update(location: location, mapString: mapString, mediaURL: mediaURL, completionHandler: self.addOrUpdateCompletionHandler)
             
         }
         
@@ -87,6 +97,15 @@ class CheckLocationViewController: UIViewController {
             
         //}
 
+    }
+    
+    func addOrUpdateCompletionHandler(result: AnyObject?, error: NSError?) -> Void {
+        guard error == nil else {
+            // TODO: show error
+            return
+        }
+        
+        print(result)
     }
     
     func unwind() {

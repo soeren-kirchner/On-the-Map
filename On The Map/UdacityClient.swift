@@ -68,14 +68,15 @@ final class UdacityClient: NSObject {
 //        return task
 //    }
     
-    func taskForGETAndPOST(_ method: String, parameters: ParametersArray, jsonBody: String? = nil, completionHandler: @escaping UdacityDefaultCompletionHandler) {
+    func taskForGETAndPOST(_ method: String, httpMethod: String = "GET", parameters: ParametersArray, jsonBody: String? = nil, completionHandler: @escaping UdacityDefaultCompletionHandler) {
         
         let request = NSMutableURLRequest(url: udacityURLFromParameters(parameters, withPathExtension: method))
         request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
         
+        request.httpMethod = httpMethod
+        
         if let jsonBody = jsonBody {
-            request.httpMethod = "POST"
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             request.httpBody = jsonBody.data(using: String.Encoding.utf8)
         }
@@ -90,13 +91,6 @@ final class UdacityClient: NSObject {
     }
     
     // MARK: helpers
-    
-    func sendError(_ error: String, domain: String = #function, completionHandler: (_ result: AnyObject?, _ error: NSError?) -> Void) {
-        print("ERROR: \(error)")
-        print("IN DOMAIN: \(domain)")
-        let userInfo = [NSLocalizedDescriptionKey : error]
-        completionHandler(nil, NSError(domain: domain, code: 1, userInfo: userInfo))
-    }
     
     func checkForErrors(data: Data?, response: URLResponse?, error: Error?, domainForError: String = #function, completionHandler: UdacityDefaultCompletionHandler) -> Data? {
         guard (error == nil) else {
@@ -114,6 +108,13 @@ final class UdacityClient: NSObject {
             return nil
         }
         return data
+    }
+    
+    func sendError(_ error: String, domain: String = #function, completionHandler: (_ result: AnyObject?, _ error: NSError?) -> Void) {
+        print("ERROR: \(error)")
+        print("IN DOMAIN: \(domain)")
+        let userInfo = [NSLocalizedDescriptionKey : error]
+        completionHandler(nil, NSError(domain: domain, code: 1, userInfo: userInfo))
     }
     
     // given raw JSON, return a usable Foundation object

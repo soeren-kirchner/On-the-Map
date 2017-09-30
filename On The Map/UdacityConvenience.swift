@@ -85,13 +85,31 @@ extension UdacityClient {
         }
     }
     
-    func add(student: Student, location: CLLocation, mapString: String, mediaURL: String, completionHandler: @escaping UdacityDefaultCompletionHandler) {
-        print("adding Student: \(student)")
+    func add(location: CLLocation, mapString: String, mediaURL: String, completionHandler: @escaping UdacityDefaultCompletionHandler) {
+        print("adding student")
+        addOrUpdate(location: location, mapString: mapString, mediaURL: mediaURL, httpMethod: "POST", completionHandler: completionHandler)
+    }
+    
+    func update(location: CLLocation, mapString: String, mediaURL: String, completionHandler: @escaping UdacityDefaultCompletionHandler) {
+        print("updating")
+        addOrUpdate(location: location, mapString: mapString, mediaURL: mediaURL, httpMethod: "PUT", completionHandler: completionHandler)
+    }
+    
+    func addOrUpdate(location: CLLocation, mapString: String, mediaURL: String, httpMethod: String, completionHandler: @escaping UdacityDefaultCompletionHandler) {
+        guard let account = UdacityClient.shared.account else {
+            // ...
+            return
+        }
+        guard let user = UdacityClient.shared.user else {
+            // ...
+            return
+        }
+
         let jsonBody = """
             {
-                "uniqueKey": "\(student.uniqueKey)",
-                "firstName": "\(student.firstName)",
-                "lastName": "\(student.lastName)",
+                "uniqueKey": "\(account.key)",
+                "firstName": "\(user.firstname)",
+                "lastName": "\(user.lastname)",
                 "mapString": "\(mapString)",
                 "mediaURL": "\(mediaURL)",
                 "latitude": \(location.coordinate.latitude),
@@ -100,17 +118,15 @@ extension UdacityClient {
         """
         print(jsonBody)
         let parameters = ParametersArray ()
-        taskForGETAndPOST(Methods.Students, parameters: parameters, jsonBody: jsonBody) { result, error in
+        let method = Methods.Students + (httpMethod == "POST" ? "" : "/" + account.key)
+        print(method)
+        
+        
+        taskForGETAndPOST(method, httpMethod: httpMethod, parameters: parameters, jsonBody: jsonBody) { result, error in
             
             print(error)
-            
-            guard error == nil else {
-                completionHandler(nil, error)
-                return
-            }
-            
             print(result)
-            // TODO: Continue Implementation
+            completionHandler(result, error)
             
         }
     }
