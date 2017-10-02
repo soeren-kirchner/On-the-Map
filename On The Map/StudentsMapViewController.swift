@@ -117,6 +117,9 @@ extension StudentsMapViewController: MKMapViewDelegate {
             if let url = URL(string: (view.annotation?.subtitle!)!) {
                 app.open(url, options: [:])
             }
+            else {
+                print("could not open safari")
+            }
         }
     }
     

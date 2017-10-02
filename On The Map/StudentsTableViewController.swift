@@ -10,6 +10,10 @@ import UIKit
 
 class StudentsTableViewController: UITableViewController {
     
+    @IBOutlet weak var activityView: UIView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
+    
     var students = [Student] ()
 
     override func viewDidLoad() {
@@ -32,6 +36,7 @@ class StudentsTableViewController: UITableViewController {
     }
     
     func fetchStudents() {
+        activity(true)
         UdacityClient.shared.fetchStudents() { results, error in
             guard error == nil else {
                 print(error!.localizedDescription)
@@ -39,13 +44,15 @@ class StudentsTableViewController: UITableViewController {
                 return
             }
             
-            // TODO: errorhandling
             guard let students = results as? [Student] else {
                 self.showAlert(title: "ERROR", alert: "data not readable")
                 return
             }
             self.students = students
-            self.reloadData()
+            DispatchQueue.main.async {
+                self.activity(false)
+                self.reloadData()
+            }
         }
     }
 
@@ -69,6 +76,7 @@ class StudentsTableViewController: UITableViewController {
     // MARK: - action
     
     @IBAction func add(_ sender: Any) {
+        performSegue(withIdentifier: "TableToAddLocation", sender: self)
     }
     
     @IBAction func logout(_ sender: Any) {
@@ -78,14 +86,20 @@ class StudentsTableViewController: UITableViewController {
         fetchStudents()
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    // MARK: - activity
+    
+    func activity(_ active: Bool) {
+        //self.view.isHidden = active
+        activityView.isHidden = !active
+        if active {
+            activityIndicator.startAnimating()
+        }
+        else {
+            activityIndicator.stopAnimating()
+        }
     }
-    */
 
 }
+
+
+

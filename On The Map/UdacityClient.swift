@@ -68,7 +68,7 @@ final class UdacityClient: NSObject {
 //        return task
 //    }
     
-    func taskForGETAndPOST(_ method: String, httpMethod: String = "GET", parameters: ParametersArray, jsonBody: String? = nil, completionHandler: @escaping UdacityDefaultCompletionHandler) {
+    func taskForGETAndPOST(_ method: String, httpMethod: String = "GET", parameters: ParametersArray? = nil, jsonBody: String? = nil, completionHandler: @escaping UdacityDefaultCompletionHandler) {
         
         let request = NSMutableURLRequest(url: udacityURLFromParameters(parameters, withPathExtension: method))
         request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
@@ -80,7 +80,12 @@ final class UdacityClient: NSObject {
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             request.httpBody = jsonBody.data(using: String.Encoding.utf8)
         }
+        print("REQUEST:")
         print(request)
+        print(request.httpMethod)
+        print(request.description)
+        print(httpMethod)
+        
         
         let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
             if let data = self.checkForErrors(data: data, response: response, error: error, completionHandler: completionHandler) {
@@ -130,16 +135,18 @@ final class UdacityClient: NSObject {
     }
     
     // create a URL from parameters
-    private func udacityURLFromParameters(_ parameters: ParametersArray, withPathExtension: String? = nil) -> URL {
+    private func udacityURLFromParameters(_ parameters: ParametersArray?, withPathExtension: String? = nil) -> URL {
         var components = URLComponents()
         components.scheme = UdacityClient.Constants.ApiScheme
         components.host = UdacityClient.Constants.ApiHost
         components.path = UdacityClient.Constants.ApiPath + (withPathExtension ?? "")
-        components.queryItems = [URLQueryItem]()
         
-        for (key, value) in parameters {
-            let queryItem = URLQueryItem(name: key, value: "\(value)")
-            components.queryItems!.append(queryItem)
+        if let parameters = parameters {
+            components.queryItems = [URLQueryItem]()
+            for (key, value) in parameters {
+                let queryItem = URLQueryItem(name: key, value: "\(value)")
+                components.queryItems!.append(queryItem)
+            }
         }
         
         return components.url!

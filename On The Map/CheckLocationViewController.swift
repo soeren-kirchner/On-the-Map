@@ -16,16 +16,16 @@ class CheckLocationViewController: UIViewController {
     var mediaURL: String?
     var mapString: String?
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
+//
+//        // Do any additional setup after loading the view.
+//    }
+//
+//    override func didReceiveMemoryWarning() {
+//        super.didReceiveMemoryWarning()
+//        // Dispose of any resources that can be recreated.
+//    }
     
     override func viewDidAppear(_ animated: Bool) {
         guard let coordinate = self.location?.coordinate else {
@@ -59,64 +59,82 @@ class CheckLocationViewController: UIViewController {
             return
         }
         
-        UdacityClient.shared.fetchStudent("123") { result, error in
-//        UdacityClient.shared.fetchStudent(key) { result, error in
+//        UdacityClient.shared.fetchStudent("123") { result, error in
+       UdacityClient.shared.fetchStudent(key) { result, error in
             
             guard error == nil else {
                 if error!.code == 101 {
-                    print("user does not exist")
-                    DispatchQueue.main.async {
-                        let alertViewController = UIAlertController(title: "Student not in Database", message: "Add the Student to the Database?", preferredStyle: .alert)
-                        alertViewController.addAction(UIAlertAction(title: "OK", style: .default) { action in
-                            UdacityClient.shared.add(location: location, mapString: mapString, mediaURL: mediaURL, completionHandler: self.addOrUpdateCompletionHandler)
-                        })
-                        alertViewController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
-                        self.present(alertViewController, animated: true, completion: nil)
+//                    print("user does not exist")
+//                    DispatchQueue.main.async {
+//                        let alertViewController = UIAlertController(title: "Student not in Database", message: "Add the Student to the Database?", preferredStyle: .alert)
+//                        alertViewController.addAction(UIAlertAction(title: "OK", style: .default) { action in
+//                            UdacityClient.shared.add(location: location, mapString: mapString, mediaURL: mediaURL, completionHandler: self.addOrUpdateCompletionHandler)
+//                        })
+//                        alertViewController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+//                        self.present(alertViewController, animated: true, completion: nil)
+//                    }
+                    self.showQuestion(title: "Student does not exist", message: "Add the Student to the Database?") {
+                        UdacityClient.shared.add(location: location, mapString: mapString, mediaURL: mediaURL, completionHandler: self.addOrUpdateCompletionHandler)
                     }
-                    
                 }
                 else {
-                    print("something wrong here")
-                    // TODO: show error
+                    self.showAlert(title: "ERROR", alert: error!.description)
                 }
                 return
             }
             
             guard let student = result as? Student else {
-                // TODO: show error
+                self.showAlert(title: "ERROR in Data", alert: error!.description)
                 return
             }
-            print(student)
-            
-            UdacityClient.shared.update(location: location, mapString: mapString, mediaURL: mediaURL, completionHandler: self.addOrUpdateCompletionHandler)
-            
+        
+//            print(student)
+//            DispatchQueue.main.async {
+//                let alertViewController = UIAlertController(title: "Student already exists", message: "Update information in the Database?", preferredStyle: .alert)
+//                alertViewController.addAction(UIAlertAction(title: "OK", style: .default) { action in
+//                    UdacityClient.shared.update(objectID: student.objectId, location: location, mapString: mapString, mediaURL: mediaURL, completionHandler: self.addOrUpdateCompletionHandler)
+//                })
+//                alertViewController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+//                self.present(alertViewController, animated: true, completion: nil)
+//            }
+        
+            self.showQuestion(title: "Student already exists", message: "Update information in the Database?") {
+                UdacityClient.shared.update(objectID: student.objectId, location: location, mapString: mapString, mediaURL: mediaURL, completionHandler: self.addOrUpdateCompletionHandler)
+            }
         }
-        
-        
-        //UdacityClient.shared.add(student: student, location: location, mapString: mapString, mediaURL: mediaURL) { response, error in
-            
-        //}
-
+    }
+    
+    func showQuestion(title: String, message: String, handler: @escaping ()->()) {
+        DispatchQueue.main.async {
+            let alertViewController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            alertViewController.addAction(UIAlertAction(title: "OK", style: .default) { action in
+//                UdacityClient.shared.update(objectID: student.objectId, location: location, mapString: mapString, mediaURL: mediaURL, completionHandler: self.addOrUpdateCompletionHandler)
+                handler()
+            })
+            alertViewController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+            self.present(alertViewController, animated: true, completion: nil)
+        }
     }
     
     func addOrUpdateCompletionHandler(result: AnyObject?, error: NSError?) -> Void {
         guard error == nil else {
-            // TODO: show error
+            showAlert(title: "ERROR", alert: "could not add/update the Location. Detail: \(error!.localizedDescription)")
             return
         }
-        
-        print(result)
+        unwind()
     }
+    
+    // MARK: - Navigation
     
     func unwind() {
         DispatchQueue.main.async {
-            self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
+            // self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
             self.performSegue(withIdentifier: "unwindToStudentsMap", sender: self)
         }
     }
     
     /*
-    // MARK: - Navigation
+    
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

@@ -13,7 +13,7 @@ extension UdacityClient {
     
     func fetchStudents(completionHandler: @escaping UdacityDefaultCompletionHandler) {
         
-        let parameters = ParametersArray ()
+        let parameters = ["order": "-updatedAt"]
         taskForGETAndPOST(Methods.Students, parameters: parameters as ParametersArray) { (results, error) in
             
             guard error == nil else {
@@ -52,7 +52,8 @@ extension UdacityClient {
         
         print("fetchStudent called with ID: \(id)")
         
-        let parameters = [UdacityClient.StudentParameterKeys.wherekey:"{\"\(UdacityClient.StudentParameterJSONBodyKey.uniqueKey)\":\"\(id)\"}"]
+        let parameters = [UdacityClient.StudentParameterKeys.wherekey:"{\"\(UdacityClient.StudentParameterJSONBodyKey.uniqueKey)\":\"\(id)\"}",
+            "order": "-updatedAt"]
         print(parameters)
         
         taskForGETAndPOST(Methods.Students, parameters: parameters as ParametersArray) { (results, error) in
@@ -90,12 +91,12 @@ extension UdacityClient {
         addOrUpdate(location: location, mapString: mapString, mediaURL: mediaURL, httpMethod: "POST", completionHandler: completionHandler)
     }
     
-    func update(location: CLLocation, mapString: String, mediaURL: String, completionHandler: @escaping UdacityDefaultCompletionHandler) {
+    func update(objectID: String, location: CLLocation, mapString: String, mediaURL: String, completionHandler: @escaping UdacityDefaultCompletionHandler) {
         print("updating")
-        addOrUpdate(location: location, mapString: mapString, mediaURL: mediaURL, httpMethod: "PUT", completionHandler: completionHandler)
+        addOrUpdate(objectId: objectID, location: location, mapString: mapString, mediaURL: mediaURL, httpMethod: "PUT", completionHandler: completionHandler)
     }
     
-    func addOrUpdate(location: CLLocation, mapString: String, mediaURL: String, httpMethod: String, completionHandler: @escaping UdacityDefaultCompletionHandler) {
+    func addOrUpdate(objectId: String = "", location: CLLocation, mapString: String, mediaURL: String, httpMethod: String, completionHandler: @escaping UdacityDefaultCompletionHandler) {
         guard let account = UdacityClient.shared.account else {
             // ...
             return
@@ -117,12 +118,12 @@ extension UdacityClient {
             }
         """
         print(jsonBody)
-        let parameters = ParametersArray ()
-        let method = Methods.Students + (httpMethod == "POST" ? "" : "/" + account.key)
+        //let parameters = ParametersArray ()
+        let method = Methods.Students + (httpMethod == "POST" ? "" : "/" + objectId)
         print(method)
         
         
-        taskForGETAndPOST(method, httpMethod: httpMethod, parameters: parameters, jsonBody: jsonBody) { result, error in
+        taskForGETAndPOST(method, httpMethod: httpMethod, jsonBody: jsonBody) { result, error in
             
             print(error)
             print(result)
