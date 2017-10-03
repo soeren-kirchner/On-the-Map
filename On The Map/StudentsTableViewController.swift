@@ -15,7 +15,7 @@ class StudentsTableViewController: UIViewController {
     @IBOutlet weak var activityView: UIView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 
-    var students = Students.shared
+    var students = [Student] ()
 
     override func viewDidLoad() {
         super.viewDidLoad()
