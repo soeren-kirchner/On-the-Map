@@ -17,7 +17,6 @@ struct UdacityUser {
             let firstname = dictionary[UdacityClient.UserResponseKeys.firstname] as? String ,
             let lastname = dictionary[UdacityClient.UserResponseKeys.lastname] as? String
         else {
-            print("ERROR in dictionary: \(dictionary)")
             return nil
         }
         self.key = key

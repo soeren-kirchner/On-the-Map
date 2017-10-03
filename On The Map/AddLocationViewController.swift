@@ -18,34 +18,11 @@ class AddLocationViewController: UIViewController {
     var mediaURL = ""
     var location: CLLocation? = nil
     
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-//    func showAlert(_ alert: String) {
-//        DispatchQueue.main.async {
-//            let alertViewController = UIAlertController(title: "ERROR", message: alert, preferredStyle: .alert)
-//            alertViewController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-//            self.present(alertViewController, animated: true, completion: nil)
-//        }
-//    }
-    
     @IBAction func getLocation(_ sender: Any) {
         
         self.mapString = addressTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         self.mediaURL = urlTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         
-        print("address: \(self.mapString)")
-        print("urlString: \(self.mediaURL)")
- 
         if self.mapString.isEmpty {
             self.showAlert(title: "No Address", alert: "Please enter a address")
             return

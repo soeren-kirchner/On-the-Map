@@ -17,6 +17,11 @@ extension UdacityClient {
         static let StudentsDateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
     }
     
+    struct LoginConstants {
+        static let SessionURL = "https://www.udacity.com/api/session"
+        static let UserDataURL = "https://www.udacity.com/api/users/"
+    }
+    
     // MARK: Methods
     
     struct Methods {
@@ -46,6 +51,11 @@ extension UdacityClient {
     
     struct StudentParameterKeys {
         static let wherekey = "where"
+        static let order = "order"
+    }
+    
+    struct StudentParameter {
+        static let updatedAtDESC = "-updatedAt"
     }
     
     struct StudentParameterJSONBodyKey {

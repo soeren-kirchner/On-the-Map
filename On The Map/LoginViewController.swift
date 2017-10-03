@@ -35,30 +35,18 @@ class LoginViewController: UIViewController {
         UIApplication.shared.statusBarStyle = .default
         unsubscribeFromKeyboardNotifications()
     }
-
-    // MARK: - Navigation
-    
-//    func showAlert(_ alert: String) {
-//        DispatchQueue.main.async {
-//            let alertViewController = UIAlertController(title: "Login Failure", message: alert, preferredStyle: .alert)
-//            alertViewController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-//            self.present(alertViewController, animated: true, completion: nil)
-//        }
-//    }
     
     @IBAction func login(_ sender: Any) {
         loginActivityIndicator.startAnimating()
         loginButton.isEnabled = false
         UdacityClient.shared.udacityLogin(user: loginTextField.text!, password: passwdTextField.text!) { data, error in
-            print(data)
-            
+
             DispatchQueue.main.async {
                 self.loginActivityIndicator.stopAnimating()
                 self.loginButton.isEnabled = true
             }
             
             guard error == nil else {
-                print(error.debugDescription)
                 self.showAlert(title: "Login Error", alert: error!.localizedDescription)
                 return
             }
@@ -68,13 +56,10 @@ class LoginViewController: UIViewController {
                 let accountData = data["account"] as? JSONDictionary,
                 let account = UdacityAccount(dictionary: accountData)
             else {
-                
                 return
             }
             
             UdacityClient.shared.account = account
-            print(account)
-            print(UdacityClient.shared.account!.key)
             
             UdacityClient.shared.fetchMyPublicData() { user, error in
                 
@@ -90,40 +75,12 @@ class LoginViewController: UIViewController {
                 
                 UdacityClient.shared.user = user
                 
-                //print(error!)
-                print(user)
-                
                 DispatchQueue.main.async {
                     self.performSegue(withIdentifier: "LoggedInSegue", sender: self)
                 }
             }
-            
-            
-            
-//            UdacityClient.shared.fetchStudent(account.key) { student, error in
-//
-//                guard error == nil else {
-//                    print(error.debugDescription)
-//                    self.showAlert(error!.localizedDescription)
-//                    return
-//                }
-//
-//                guard let student = student else {
-//                    self.showAlert("something wrong with student data")
-//                    return
-//                }
-//
-//                UdacityClient.shared.mySelf = student
-//            }
-            
-            
         }
     }
-
-    // MARK: - Keybord things
-    
-
-    
 }
 
 extension LoginViewController: UITextFieldDelegate {

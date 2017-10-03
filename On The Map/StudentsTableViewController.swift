@@ -26,7 +26,6 @@ class StudentsTableViewController: UIViewController {
  
     func reloadData() {
         DispatchQueue.main.async {
-            print("reload Data called")
             self.tableView.reloadData()
         }
     }
@@ -35,7 +34,6 @@ class StudentsTableViewController: UIViewController {
         activity(true)
         UdacityClient.shared.fetchStudents() { results, error in
             guard error == nil else {
-                print(error!.localizedDescription)
                 self.showAlert(title: "ERROR", alert: "could not load data")
                 self.activity(false)
                 return
@@ -82,7 +80,6 @@ class StudentsTableViewController: UIViewController {
 extension StudentsTableViewController: UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        print("numberOfSections called")
         return 1
     }
     

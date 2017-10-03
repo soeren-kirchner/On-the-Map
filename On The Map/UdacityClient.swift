@@ -16,58 +16,14 @@ final class UdacityClient: NSObject {
     // MARK: shared Instance (Singleton)
     
     private override init() {}
-    
     static let shared = UdacityClient()
 
     // MARK: - Properties
     
     var session = URLSession.shared
     var account: UdacityAccount? = nil
-    //var mySelf: Student? = nil
     var user: UdacityUser? = nil
-   
-//    func taskForGETMethod(_ method: String, parameters: ParametersArray, completionHandler: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
-//
-//        let request = NSMutableURLRequest(url: udacityURLFromParameters(parameters, withPathExtension: method))
-//        request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
-//        request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
-//
-//        print(request)
-//
-//        let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
-//            if let data = self.checkForErrors(data: data, response: response, error: error, completionHandler: completionHandler) {
-//                self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandler)
-//            }
-//        }
-//
-//        task.resume()
-//        return task
-//    }
-    
-    // MARK: - POST Method
-    
-//    func taskForPOSTMethod(_ method: String, parameters: ParametersArray, jsonBody: String, completionHandler: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
-//        
-//        let request = NSMutableURLRequest(url: udacityURLFromParameters(parameters, withPathExtension: method))
-//        request.httpMethod = "POST"
-//        request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
-//        request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
-//        //request.addValue("application/json", forHTTPHeaderField: "Accept")
-//        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-//        request.httpBody = jsonBody.data(using: String.Encoding.utf8)
-//        
-//        print(request)
-//        
-//        let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
-//            if let data = self.checkForErrors(data: data, response: response, error: error, completionHandler: completionHandler) {
-//                self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandler)
-//            }
-//        }
-//        
-//        task.resume()
-//        return task
-//    }
-    
+       
     func taskForGETAndPOST(_ method: String, httpMethod: String = "GET", parameters: ParametersArray? = nil, jsonBody: String? = nil, completionHandler: @escaping UdacityDefaultCompletionHandler) {
         
         let request = NSMutableURLRequest(url: udacityURLFromParameters(parameters, withPathExtension: method))
@@ -80,13 +36,7 @@ final class UdacityClient: NSObject {
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             request.httpBody = jsonBody.data(using: String.Encoding.utf8)
         }
-        print("REQUEST:")
-        print(request)
-        print(request.httpMethod)
-        print(request.description)
-        print(httpMethod)
-        
-        
+       
         let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
             if let data = self.checkForErrors(data: data, response: response, error: error, completionHandler: completionHandler) {
                 self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandler)

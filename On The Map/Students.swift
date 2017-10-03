@@ -14,7 +14,6 @@ class Students {
     private var iteratorIndex: Int = 0
     
     // MARK: shared Instance (Singleton)
-    
     static let shared = Students()
     
     var count: Int {
@@ -23,28 +22,13 @@ class Students {
         }
     }
     
-    func append(student: Student) {
-        studentsArray.append(student)
-    }
-    
     func get(atIndex: Int) -> Student{
         return studentsArray[atIndex]
     }
-    
-    func enumerated() -> EnumeratedSequence<[Student]> {
-        return studentsArray.enumerated()
-    }
-    
-    func removeAll() {
-        studentsArray.removeAll()
-    }
-    
+  
     func replace(by students: [Student]) {
         studentsArray = students
-    }
-    
-    
-    
+    }    
 }
 
 extension Students: Sequence, IteratorProtocol {
@@ -63,4 +47,3 @@ extension Students: Sequence, IteratorProtocol {
         return currentStudent
     }
 }
-

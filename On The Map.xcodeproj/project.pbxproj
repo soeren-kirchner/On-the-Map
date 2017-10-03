@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		111ED8111F7AA46900132D6F /* UdacityUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111ED8101F7AA46900132D6F /* UdacityUser.swift */; };
-		11441ABF1F69813600F3DC35 /* UdacityError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11441ABE1F69813600F3DC35 /* UdacityError.swift */; };
 		11441AC11F6C5D1700F3DC35 /* StudentsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11441AC01F6C5D1700F3DC35 /* StudentsTableViewCell.swift */; };
 		11441AC31F6DB46A00F3DC35 /* StudentsMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11441AC21F6DB46A00F3DC35 /* StudentsMapViewController.swift */; };
 		11441AC51F6F21DA00F3DC35 /* AddLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11441AC41F6F21DA00F3DC35 /* AddLocationViewController.swift */; };
@@ -31,7 +30,6 @@
 
 /* Begin PBXFileReference section */
 		111ED8101F7AA46900132D6F /* UdacityUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UdacityUser.swift; sourceTree = "<group>"; };
-		11441ABE1F69813600F3DC35 /* UdacityError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityError.swift; sourceTree = "<group>"; };
 		11441AC01F6C5D1700F3DC35 /* StudentsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentsTableViewCell.swift; sourceTree = "<group>"; };
 		11441AC21F6DB46A00F3DC35 /* StudentsMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentsMapViewController.swift; sourceTree = "<group>"; };
 		11441AC41F6F21DA00F3DC35 /* AddLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddLocationViewController.swift; sourceTree = "<group>"; };
@@ -131,7 +129,6 @@
 				1150CD331F79756E00C8FB11 /* UdacityConvenience.swift */,
 				11F08D7E1F65D9050076D079 /* UdacityConstants.swift */,
 				11F08D801F65E0920076D079 /* UdacityLogin.swift */,
-				11441ABE1F69813600F3DC35 /* UdacityError.swift */,
 			);
 			name = Udacity;
 			sourceTree = "<group>";
@@ -186,7 +183,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0830;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "Sören Kirchner";
 				TargetAttributes = {
 					11F08D5F1F6309740076D079 = {
@@ -235,7 +232,6 @@
 				11AA2BE81F83F31300E75C80 /* Students.swift in Sources */,
 				11F08D7D1F65BEFD0076D079 /* UdacityClient.swift in Sources */,
 				11F08D811F65E0920076D079 /* UdacityLogin.swift in Sources */,
-				11441ABF1F69813600F3DC35 /* UdacityError.swift in Sources */,
 				11F08D7F1F65D9050076D079 /* UdacityConstants.swift in Sources */,
 				11AA2BE61F7FF5BE00E75C80 /* UIViewControllerExtension.swift in Sources */,
 				11F08D851F6705520076D079 /* StudentsTableViewController.swift in Sources */,
@@ -284,7 +280,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -292,7 +290,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -334,7 +336,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -342,7 +346,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;

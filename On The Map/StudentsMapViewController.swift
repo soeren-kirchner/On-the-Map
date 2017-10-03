@@ -21,18 +21,8 @@ class StudentsMapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
-//        mapView.showsScale = true
-//        mapView.showsPointsOfInterest = true
         fetchStudents()
     }
-    
-//    func showAlert(_ alert: String) {
-//        DispatchQueue.main.async {
-//            let alertViewController = UIAlertController(title: "Update Failure", message: alert, preferredStyle: .alert)
-//            alertViewController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-//            self.present(alertViewController, animated: true, completion: nil)
-//        }
-//    }
     
     func fetchStudents() {
         activity(true)
@@ -88,18 +78,10 @@ class StudentsMapViewController: UIViewController {
         fetchStudents()
     }
     
-    
     // MARK: - Navigation
 
     @IBAction func unwindToStudentsMapView(segue: UIStoryboardSegue) {}
-    
-    /*
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */    
+   
 }
 
 extension StudentsMapViewController: MKMapViewDelegate {

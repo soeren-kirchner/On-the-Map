@@ -13,7 +13,7 @@ extension UdacityClient {
     
     func fetchStudents(completionHandler: @escaping UdacityDefaultCompletionHandler) {
         
-        let parameters = ["order": "-updatedAt"]
+        let parameters = [UdacityClient.StudentParameterKeys.order: UdacityClient.StudentParameter.updatedAtDESC]
         taskForGETAndPOST(Methods.Students, parameters: parameters as ParametersArray) { (results, error) in
             
             guard error == nil else {
@@ -22,6 +22,7 @@ extension UdacityClient {
             }
             
             var students = [Student] ()
+            
             guard
                 let results = results as? JSONDictionary,
                 let resultsArray = results["results"] as? JSONArray
@@ -31,13 +32,8 @@ extension UdacityClient {
             }
             
             for (index, item) in resultsArray.enumerated() {
-//                if let student = Student(dictionary: item) {
-//                    students.append(student)
-//                }
-//                else {
-//                    print("could not create and append student at index: \(index). Incorrect keys.")
-//                }
                 guard let student = Student(dictionary: item) else {
+                    // print error to console only
                     print("could not create and append student at index: \(index). Incorrect keys.")
                     continue
                 }
@@ -50,11 +46,8 @@ extension UdacityClient {
     
     func fetchStudent(_ id: String, completionHandler: @escaping UdacityDefaultCompletionHandler) {
         
-        print("fetchStudent called with ID: \(id)")
-        
         let parameters = [UdacityClient.StudentParameterKeys.wherekey:"{\"\(UdacityClient.StudentParameterJSONBodyKey.uniqueKey)\":\"\(id)\"}",
-            "order": "-updatedAt"]
-        print(parameters)
+            UdacityClient.StudentParameterKeys.order: UdacityClient.StudentParameter.updatedAtDESC]
         
         taskForGETAndPOST(Methods.Students, parameters: parameters as ParametersArray) { (results, error) in
             
@@ -63,7 +56,6 @@ extension UdacityClient {
                 return
             }
             
-            print(results)
             guard
                 let results = results as? JSONDictionary,
                 let resultsArray = results["results"] as? JSONArray else {
@@ -97,12 +89,14 @@ extension UdacityClient {
     }
     
     func addOrUpdate(objectId: String = "", location: CLLocation, mapString: String, mediaURL: String, httpMethod: String, completionHandler: @escaping UdacityDefaultCompletionHandler) {
+
         guard let account = UdacityClient.shared.account else {
-            // ...
+            completionHandler(nil, NSError(domain: "updateInformation", code: 1, userInfo: [NSLocalizedDescriptionKey: "No Account Data"]));
             return
         }
+
         guard let user = UdacityClient.shared.user else {
-            // ...
+            completionHandler(nil, NSError(domain: "updateInformation", code: 1, userInfo: [NSLocalizedDescriptionKey: "No User Data"]));
             return
         }
 
@@ -117,20 +111,11 @@ extension UdacityClient {
                 "longitude": \(location.coordinate.longitude)
             }
         """
-        print(jsonBody)
-        //let parameters = ParametersArray ()
+
         let method = Methods.Students + (httpMethod == "POST" ? "" : "/" + objectId)
-        print(method)
-        
-        
+
         taskForGETAndPOST(method, httpMethod: httpMethod, jsonBody: jsonBody) { result, error in
-            
-            print(error)
-            print(result)
             completionHandler(result, error)
-            
         }
     }
-    
-    
 }

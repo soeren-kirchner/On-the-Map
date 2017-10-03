@@ -11,13 +11,17 @@ import UIKit
 
 extension UIViewController {
     
+    // common user alert dialog
+    
     func showAlert(title: String, alert: String) {
         DispatchQueue.main.async {
-            let alertViewController = UIAlertController(title: "Login Failure", message: alert, preferredStyle: .alert)
+            let alertViewController = UIAlertController(title: title, message: alert, preferredStyle: .alert)
             alertViewController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(alertViewController, animated: true, completion: nil)
         }
     }
+    
+    // show/hide keyboard
     
     func subscribeToKeyboardNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: .UIKeyboardWillShow, object: nil)
@@ -42,6 +46,8 @@ extension UIViewController {
     @objc func keyboardWillHide(_ notification:Notification) {
         view.frame.origin.y = 0
     }
+    
+    // Logout for Table and Map VCs
     
     func logout() {
         UdacityClient.shared.logout() { results, error in

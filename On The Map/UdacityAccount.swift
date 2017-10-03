@@ -14,7 +14,6 @@ struct UdacityAccount {
     let registered: Bool
     
     init?(dictionary: JSONDictionary) {
-        print(dictionary)
         guard let key = dictionary["key"] as? String,
             let registered = dictionary["registered"] as? Bool
         else {
