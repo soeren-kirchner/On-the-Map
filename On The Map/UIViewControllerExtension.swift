@@ -43,4 +43,22 @@ extension UIViewController {
         view.frame.origin.y = 0
     }
     
+    func logout() {
+        UdacityClient.shared.logout() { results, error in
+            guard error == nil else {
+                self.showAlert(title: "Logout Error", alert: error!.description)
+                return
+            }
+            
+            guard let results = results else {
+                self.showAlert(title: "Logout Error", alert: "Could not logout for unknown reason")
+                return
+            }
+            
+            print(results)
+            DispatchQueue.main.async {
+                self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
+            }
+        }
+    }
 }

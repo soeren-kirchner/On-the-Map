@@ -13,13 +13,16 @@ class StudentsMapViewController: UIViewController {
 
     @IBOutlet weak var mapView: MKMapView!
     
+    @IBOutlet weak var activityView: UIView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
     var students = [Student] ()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
-        mapView.showsScale = true
-        mapView.showsPointsOfInterest = true
+//        mapView.showsScale = true
+//        mapView.showsPointsOfInterest = true
         fetchStudents()
     }
     
@@ -32,14 +35,17 @@ class StudentsMapViewController: UIViewController {
 //    }
     
     func fetchStudents() {
+        activity(true)
         UdacityClient.shared.fetchStudents() { results, error in
             guard error == nil else {
                 self.showAlert(title: "ERROR", alert: "could not load data")
+                self.activity(false)
                 return
             }
             
             guard let students = results as? [Student] else {
                 self.showAlert(title: "ERROR", alert: "data not readable")
+                self.activity(false)
                 return
             }
             
@@ -58,7 +64,15 @@ class StudentsMapViewController: UIViewController {
             DispatchQueue.main.async {
                 self.mapView.removeAnnotations(self.mapView.annotations)
                 self.mapView.addAnnotations(annotations)
+                self.activity(false)
             }
+        }
+    }
+    
+    func activity(_ active: Bool) {
+        DispatchQueue.main.async {
+            self.activityView.isHidden = !active
+            active ? self.activityIndicator.startAnimating() : self.activityIndicator.stopAnimating()
         }
     }
     
@@ -67,6 +81,7 @@ class StudentsMapViewController: UIViewController {
     }
     
     @IBAction func logout(_ sender: Any) {
+        logout()
     }
   
     @IBAction func fetchStudents(_ sender: Any) {
@@ -109,6 +124,7 @@ extension StudentsMapViewController: MKMapViewDelegate {
     }
     
     // responde to tabbing
+    // TODO: improve it
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         print("It was called")
         print(control)
