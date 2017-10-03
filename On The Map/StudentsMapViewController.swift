@@ -16,7 +16,7 @@ class StudentsMapViewController: UIViewController {
     @IBOutlet weak var activityView: UIView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
-    var students = [Student] ()
+    var students = Students.shared
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,7 +49,7 @@ class StudentsMapViewController: UIViewController {
                 return
             }
             
-            self.students = students
+            self.students.replace(by: students)
             
             var annotations = [MKPointAnnotation]()
             

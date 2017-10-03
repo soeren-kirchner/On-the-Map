@@ -15,7 +15,7 @@ class StudentsTableViewController: UIViewController {
     @IBOutlet weak var activityView: UIView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 
-    var students = [Student] ()
+    var students = Students.shared
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,7 +46,7 @@ class StudentsTableViewController: UIViewController {
                 self.activity(false)
                 return
             }
-            self.students = students
+            self.students.replace(by: students)
             DispatchQueue.main.async {
                 self.activity(false)
                 self.reloadData()
@@ -96,7 +96,7 @@ extension StudentsTableViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "StudentsTableViewCell", for: indexPath) as! StudentsTableViewCell
-        let student = students[indexPath.row]
+        let student = students.get(atIndex: indexPath.row)
         cell.nameLabel.text = student.firstName + " " + student.lastName
         return cell
     }
