@@ -105,22 +105,26 @@ extension StudentsMapViewController: MKMapViewDelegate {
         return pinView
     }
     
-    // responde to tabbing
-    // TODO: improve it
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        print("It was called")
-        print(control)
-        if control == view.rightCalloutAccessoryView {
-            let app = UIApplication.shared
-            if let url = URL(string: (view.annotation?.subtitle!)!) {
-                app.open(url, options: [:])
-            }
-            else {
-                print("could not open safari")
+
+        let app = UIApplication.shared
+   
+        guard control == view.rightCalloutAccessoryView else {
+            return
+        }
+  
+        guard let url = URL(string: (view.annotation?.subtitle!)!) else {
+            self.showAlert(title: "Error", alert: "Failure in URL")
+            return
+        }
+        
+        app.open(url, options: [:]) { success in
+            guard success else {
+                self.showAlert(title: "Error", alert: "could not open the given URL")
+                return
             }
         }
     }
-    
 }
 
 
