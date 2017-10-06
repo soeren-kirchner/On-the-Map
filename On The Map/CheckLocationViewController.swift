@@ -56,13 +56,13 @@ class CheckLocationViewController: UIViewController {
                     }
                 }
                 else {
-                    self.showAlert(title: "ERROR", alert: error!.description)
+                    self.showAlert(title: "ERROR", alert: "The internet connection is offline.")
                 }
                 return
             }
             
-            guard let student = result as? Student else {
-                self.showAlert(title: "ERROR in Data", alert: error!.description)
+            guard let student = result as? StudentInformation else {
+                self.showAlert(title: "ERROR in Data", alert: "for unknown reason.")
                 return
             }
         

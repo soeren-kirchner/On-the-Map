@@ -13,12 +13,22 @@ class AddLocationViewController: UIViewController {
     
     @IBOutlet weak var addressTextField: UITextField!
     @IBOutlet weak var urlTextField: UITextField!
-
+    
+    @IBOutlet weak var activityView: UIStackView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
     var mapString = ""
     var mediaURL = ""
     var location: CLLocation? = nil
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        activity(false)
+    }
+    
     @IBAction func getLocation(_ sender: Any) {
+        
+        activity(true)
         
         self.mapString = addressTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         self.mediaURL = urlTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -37,6 +47,8 @@ class AddLocationViewController: UIViewController {
         
         geoCoder.geocodeAddressString(mapString) { (placemarks, error) in
             
+            self.activity(false)
+            
             guard error == nil else {
                 self.showAlert(title: "Address not found", alert: "Could'nt get information to your Address")
                 return
@@ -52,6 +64,13 @@ class AddLocationViewController: UIViewController {
             DispatchQueue.main.async {
                 self.performSegue(withIdentifier: "AddToCeckLocationSegue", sender: self)
             }
+        }
+    }
+    
+    func activity(_ active: Bool) {
+        DispatchQueue.main.async {
+            self.activityView.isHidden = !active
+            active ? self.activityIndicator.startAnimating() : self.activityIndicator.stopAnimating()
         }
     }
 

@@ -49,27 +49,27 @@ final class UdacityClient: NSObject {
     
     func checkForErrors(data: Data?, response: URLResponse?, error: Error?, domainForError: String = #function, completionHandler: UdacityDefaultCompletionHandler) -> Data? {
         guard (error == nil) else {
-            self.sendError("There was an error with your request: \(error!)", domain: domainForError, completionHandler: completionHandler)
+            self.sendError("There was an error with your request: \(error!)", domain: domainForError, code: 11, completionHandler: completionHandler)
             return nil
         }
         
         guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
-            self.sendError("Your request returned a status code other than 2xx!", domain: domainForError, completionHandler: completionHandler)
+            self.sendError("Your request returned a status code other than 2xx!", domain: domainForError, code: 12, completionHandler: completionHandler)
             return nil
         }
         
         guard let data = data else {
-            self.sendError("No data was returned by the request!", domain: domainForError, completionHandler: completionHandler)
+            self.sendError("No data was returned by the request!", domain: domainForError, code: 13, completionHandler: completionHandler)
             return nil
         }
         return data
     }
     
-    func sendError(_ error: String, domain: String = #function, completionHandler: (_ result: AnyObject?, _ error: NSError?) -> Void) {
+    func sendError(_ error: String, domain: String = #function, code: Int = 1, completionHandler: (_ result: AnyObject?, _ error: NSError?) -> Void) {
         print("ERROR: \(error)")
         print("IN DOMAIN: \(domain)")
         let userInfo = [NSLocalizedDescriptionKey : error]
-        completionHandler(nil, NSError(domain: domain, code: 1, userInfo: userInfo))
+        completionHandler(nil, NSError(domain: domain, code: code, userInfo: userInfo))
     }
     
     // given raw JSON, return a usable Foundation object

@@ -52,10 +52,12 @@ extension UdacityClient {
     struct StudentParameterKeys {
         static let wherekey = "where"
         static let order = "order"
+        static let limit = "limit"
     }
     
     struct StudentParameter {
         static let updatedAtDESC = "-updatedAt"
+        static let limit = "100"
     }
     
     struct StudentParameterJSONBodyKey {

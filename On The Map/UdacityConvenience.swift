@@ -13,7 +13,8 @@ extension UdacityClient {
     
     func fetchStudents(completionHandler: @escaping UdacityDefaultCompletionHandler) {
         
-        let parameters = [UdacityClient.StudentParameterKeys.order: UdacityClient.StudentParameter.updatedAtDESC]
+        let parameters = [UdacityClient.StudentParameterKeys.order: UdacityClient.StudentParameter.updatedAtDESC,
+                          UdacityClient.StudentParameterKeys.limit: UdacityClient.StudentParameter.limit]
         taskForGETAndPOST(Methods.Students, parameters: parameters as ParametersArray) { (results, error) in
             
             guard error == nil else {
@@ -21,7 +22,7 @@ extension UdacityClient {
                 return
             }
             
-            var students = [Student] ()
+            var students = [StudentInformation] ()
             
             guard
                 let results = results as? JSONDictionary,
@@ -32,7 +33,7 @@ extension UdacityClient {
             }
             
             for (index, item) in resultsArray.enumerated() {
-                guard let student = Student(dictionary: item) else {
+                guard let student = StudentInformation(dictionary: item) else {
                     // print error to console only
                     print("could not create and append student at index: \(index). Incorrect keys.")
                     continue
@@ -69,7 +70,7 @@ extension UdacityClient {
                 return
             }
                 
-            guard let mySelf = Student(dictionary: resultsArray[0])
+            guard let mySelf = StudentInformation(dictionary: resultsArray[0])
                 else {
                     completionHandler(nil, NSError(domain: "fetchStudent", code: 102, userInfo: [NSLocalizedDescriptionKey: "Could not evaluate json student data"]))
                     return

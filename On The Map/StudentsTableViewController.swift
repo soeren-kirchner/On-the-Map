@@ -39,7 +39,7 @@ class StudentsTableViewController: UIViewController {
                 return
             }
             
-            guard let students = results as? [Student] else {
+            guard let students = results as? [StudentInformation] else {
                 self.showAlert(title: "ERROR", alert: "data not readable")
                 self.activity(false)
                 return
@@ -96,6 +96,23 @@ extension StudentsTableViewController: UITableViewDataSource {
         let student = students.get(atIndex: indexPath.row)
         cell.nameLabel.text = student.firstName + " " + student.lastName
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        print(indexPath)
+        let app = UIApplication.shared
+        
+        guard let url = URL(string: (students.get(atIndex: indexPath.row).mediaURL)) else {
+            self.showAlert(title: "Error", alert: "Failure in URL")
+            return
+        }
+        
+        app.open(url, options: [:]) { success in
+            guard success else {
+                self.showAlert(title: "Error", alert: "could not open the given URL")
+                return
+            }
+        }
     }
     
 }

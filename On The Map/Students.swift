@@ -10,7 +10,7 @@ import Foundation
 
 class Students {
 
-    private var studentsArray = [Student] ()
+    private var studentsArray = [StudentInformation] ()
     private var iteratorIndex: Int = 0
     
     // MARK: shared Instance (Singleton)
@@ -22,11 +22,11 @@ class Students {
         }
     }
     
-    func get(atIndex: Int) -> Student{
+    func get(atIndex: Int) -> StudentInformation{
         return studentsArray[atIndex]
     }
   
-    func replace(by students: [Student]) {
+    func replace(by students: [StudentInformation]) {
         studentsArray = students
     }    
 }
@@ -38,7 +38,7 @@ extension Students: Sequence, IteratorProtocol {
         return self
     }
     
-    func next() -> Student? {
+    func next() -> StudentInformation? {
         if iteratorIndex >= studentsArray.count {
             return nil
         }

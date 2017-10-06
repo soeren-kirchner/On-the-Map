@@ -130,13 +130,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="sIC-9k-mX1">
-                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
+                                <rect key="frame" x="0.0" y="104" width="375" height="514"/>
                             </mapView>
                             <view alpha="0.40000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hzb-TB-UgE">
-                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
+                                <rect key="frame" x="0.0" y="104" width="375" height="514"/>
                                 <subviews>
                                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="V57-Ew-xIg">
-                                        <rect key="frame" x="169" y="259" width="37" height="37"/>
+                                        <rect key="frame" x="169" y="239" width="37" height="37"/>
                                     </activityIndicatorView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -206,6 +206,12 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Your URL" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="AeG-OM-EqI">
+                                <rect key="frame" x="36" y="144" width="303" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VU9-i4-ldE">
                                 <rect key="frame" x="36" y="194" width="303" height="40"/>
                                 <color key="backgroundColor" white="0.90000000000000002" alpha="1" colorSpace="calibratedWhite"/>
@@ -219,28 +225,40 @@
                                     <action selector="getLocation:" destination="Eeb-hC-bdG" eventType="touchUpInside" id="diW-oH-9yy"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Your URL" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="AeG-OM-EqI">
-                                <rect key="frame" x="36" y="144" width="303" height="30"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="F6b-h2-JdE">
+                                <rect key="frame" x="70.5" y="254" width="234.5" height="20"/>
+                                <subviews>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="aNZ-9n-thy">
+                                        <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
+                                    </activityIndicatorView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Looking for your address …" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VhN-4Z-1Zf">
+                                        <rect key="frame" x="27" y="0.0" width="207.5" height="20"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="AeG-OM-EqI" firstAttribute="top" secondItem="UkL-8L-17q" secondAttribute="bottom" constant="20" id="4XT-Mm-qJJ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="UkL-8L-17q" secondAttribute="trailing" constant="20" id="52L-Mm-ZFi"/>
                             <constraint firstItem="UkL-8L-17q" firstAttribute="top" secondItem="LIE-wd-LVu" secondAttribute="bottom" constant="30" id="6e9-yN-GOc"/>
+                            <constraint firstItem="F6b-h2-JdE" firstAttribute="centerX" secondItem="1tb-Vo-eNB" secondAttribute="centerX" id="EKt-T2-91g"/>
                             <constraint firstAttribute="trailingMargin" secondItem="VU9-i4-ldE" secondAttribute="trailing" constant="20" id="P3u-76-Jzg"/>
                             <constraint firstItem="VU9-i4-ldE" firstAttribute="leading" secondItem="1tb-Vo-eNB" secondAttribute="leadingMargin" constant="20" id="Sxs-sj-jN6"/>
                             <constraint firstItem="VU9-i4-ldE" firstAttribute="top" secondItem="AeG-OM-EqI" secondAttribute="bottom" constant="20" id="euE-kA-hzC"/>
                             <constraint firstItem="UkL-8L-17q" firstAttribute="leading" secondItem="1tb-Vo-eNB" secondAttribute="leadingMargin" constant="20" id="ftm-JA-Y1B"/>
                             <constraint firstAttribute="trailingMargin" secondItem="AeG-OM-EqI" secondAttribute="trailing" constant="20" id="mZ5-mA-GZ0"/>
                             <constraint firstItem="AeG-OM-EqI" firstAttribute="leading" secondItem="1tb-Vo-eNB" secondAttribute="leadingMargin" constant="20" id="rUw-l7-Kx1"/>
+                            <constraint firstItem="F6b-h2-JdE" firstAttribute="top" secondItem="VU9-i4-ldE" secondAttribute="bottom" constant="20" id="vqY-kE-5Rb"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Add Location" id="GZB-rr-YBA"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="aNZ-9n-thy" id="Kev-tb-O59"/>
+                        <outlet property="activityView" destination="F6b-h2-JdE" id="rzt-Am-67J"/>
                         <outlet property="addressTextField" destination="UkL-8L-17q" id="tvE-GO-KTO"/>
                         <outlet property="urlTextField" destination="AeG-OM-EqI" id="xQW-xT-p9d"/>
                         <segue destination="fPF-I1-qEr" kind="show" identifier="AddToCeckLocationSegue" id="zL1-nw-3Wd"/>
@@ -248,7 +266,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Un-YY-QK8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3794" y="222"/>
+            <point key="canvasLocation" x="3792.8000000000002" y="221.73913043478262"/>
         </scene>
         <!--Check Location-->
         <scene sceneID="tFP-Rc-O2M">

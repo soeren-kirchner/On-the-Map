@@ -33,7 +33,7 @@ class StudentsMapViewController: UIViewController {
                 return
             }
             
-            guard let students = results as? [Student] else {
+            guard let students = results as? [StudentInformation] else {
                 self.showAlert(title: "ERROR", alert: "data not readable")
                 self.activity(false)
                 return

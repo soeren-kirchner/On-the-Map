@@ -46,8 +46,19 @@ class LoginViewController: UIViewController {
                 self.loginButton.isEnabled = true
             }
             
-            guard error == nil else {
-                self.showAlert(title: "Login Error", alert: error!.localizedDescription)
+            guard error == nil else {                
+                switch error!.code {
+                case 11:
+                    self.showAlert(title: "Login Error", alert: "The internet connection is offline.")
+                    return
+                case 12:
+                    self.showAlert(title: "Login Error", alert: "Wrong username or password.")
+                    return
+                default:
+                    break
+                }
+                
+                self.showAlert(title: "Login Error", alert: "for unknown reason.")
                 return
             }
             
@@ -69,7 +80,7 @@ class LoginViewController: UIViewController {
                 }
                 
                 guard let user = user as? UdacityUser else {
-                    self.showAlert(title: "Fetching Data Error", alert: "Could nozt fetch user for this account")
+                    self.showAlert(title: "Fetching Data Error", alert: "Could not fetch user for this account")
                     return
                 }
                 
